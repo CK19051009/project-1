@@ -215,7 +215,7 @@ module.exports.postOrder = async (req, res) => {
       const momo = await momoHelper.momoPaymentApi(
         totalPrice + 25000,
         `${orderProduct.id}`,
-        "https://68c4-2405-4803-f805-a300-ec5f-b8c9-62fd-fc6e.ngrok-free.app/api/v1/client/momo-callback"
+        "https://tickkietcom.vercel.app/api/v1/client/momo-callback"
       );
       await Order.updateOne(
         { _id: orderProduct.id },
@@ -279,9 +279,7 @@ module.exports.orderSuccess = async (req, res) => {
 module.exports.momoCallBack = async (req, res) => {
   try {
     const { orderId, resultCode } = req.body;
-    // console.log(req.body);
-    // console.log(orderId);
-    // console.log(resultCode);
+
     if (resultCode === 0) {
       // Thanh toán thành công
       await Order.updateOne(
