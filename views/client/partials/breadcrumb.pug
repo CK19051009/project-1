@@ -1,0 +1,6 @@
+div(class="py-[10px]")
+        nav 
+            ul(class="flex items-center justify-start" id="breadcrumb") 
+                each item in breadCrumb
+                    li(class="flex" id="sub-breadcrumb") 
+                        a(href=item.href class="block w-full lg:font-[500] md:tex-[12px] line-clamp-1 md:font-[400] text-[10px] font-[300] lg:text-[14px] text-[#808089]") #{item.title}

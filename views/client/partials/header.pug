@@ -1,0 +1,60 @@
+-
+  var buttonAccount = [
+    {
+      title: "Thông tin tài khoản",
+      url: "/customer/profile"
+    },
+    {
+      title: "Đơn hàng của tôi",
+      url: "/customer/order"
+    },
+    {
+      title: "Trung tâm hỗ trợ",
+      url: "/support"
+    },
+    {
+      title: "Đăng xuất",
+      url: "/auth/logout"
+    }
+  ]
+
+header 
+    div(class="bg-[#ffffff] py-[5px] px-[20px]")
+        div(class="container mx-auto flex  justify-between items-center")
+            a(class="lg:mr-[48px] mr-[36px] md:size-[70px] size-[50px]" href="/")
+                img(class="md:size-[70px] size-[50px]" src="/client/assets/images/logi-tiki.svg")
+            form(
+                action= "/search"
+                class=" flex items-center flex-1 sm:w-auto lg:py-[10px] py-[4px] border-[1px]  border-solid border-[#dddde3] rounded-[8px] px-[10] "  method="GET")
+                button(class="ml-[20px] flex items-center size-[20px] ")
+                    i(class="fa-solid fa-magnifying-glass text-[#808089]")
+                input(type="text", value = keyword input-search-header name="keyword" class="placeholder:text-[14px] placeholder:font-[400] outline-0 flex-1 border-r-[1px] border-solid border-[#808089] ml-[4px] text-[13px] md:text-[16px] font-[500]" )
+                
+                button(type="submit"  class="md:font-[400] lg:text-[14px] text-[12px]  font-[300] text-[#0a68ff] px-[12px]") Tìm kiếm 
+
+            div(class="lg:ml-[60px] md:ml-[30px] ml-[20px] sm:flex items-center  hidden ")
+                a(href="/" class=("lg:mr-[28px] md:mr-[20px] mr-[16px]   lg:flex hidden cursor-pointer px-[8px] py-[2px] rounded-[5px] hover:bg-[#dcdcea] " + `${currentPath == '/' ? " active" : " text-[#808089] "}`) )
+                  div(class="items-center justify-center")
+                    i(class="fa-solid fa-house md:size-[24px] size-[20px]  " style="color: inherit;")
+                    span(class="font-[400] md:text-[14px] sm:text-[12px] text-[9px]  " style="color: inherit;") Trang chủ 
+                button(button-header-login class="lg:mr-[25px] md:mr-[20px] px-[8px] py-[2px] rounded-[5px] mr-[10px] md:flex hidden hover:bg-[#bbd3fa] cursor-pointer group relative")
+                    div(class="items-center justify-center")
+                      i(class="fa-regular fa-user md:size-[24px] size-[20px] text-[#808089]")
+                      span(class=" font-[400] md:text-[14px] sm:text-[12px] text-[9px]  text-[#0a68ff] ") Tài khoản 
+                      if token
+                        div(class="py-[10px] text-start bg-[#ffffff] hidden group-hover:block  rounded-[12px] absolute w-[200px] right-0 top-[30px] " id = "dropdownAccount")
+                            ul  
+                                each item in buttonAccount
+
+                                    li(class="hover:bg-[#dcdcea] px-[12px] py-[6px]")
+                                            a(href=item.url class="w-full") 
+                                                span(class="text-[14px] text-[#5c5c5e] font-[400] w-full ") #{item.title}
+                span(class="h-[20px] text-[#ebebf0] lg:mr-[20px] mr-[15px] md:inline-block hidden") |    
+                button(href-cart="/cart" class="relative  hover:bg-[#bbd3fa] px-[8px] py-[2px] rounded-[5px]")
+                    i(class="fa-solid fa-cart-shopping text-[blue]  ") 
+                    span(class="absolute top-[-10px]  text-[13px] font-[700] text-center text-[#ffffff] bg-[#ff424f] rounded-[8px] p-[3px] ") #{cart ? cart.totalProduct : 0}
+                div(class="sm:hidden block ml-[50px] ")
+                    a(href="")
+                        i(class="fa-solid fa-bars")
+       
+                                            

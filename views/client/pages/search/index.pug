@@ -1,0 +1,80 @@
+extends ../../layouts/default.pug
+include ../../mixins/mixin.pug
+block category
+    include ../../partials/category.pug
+block main 
+    if products.length > 0
+        +boxTitleProduct("Kết quả")
+     
+                
+        div(class=" list-product ")
+            div(class="grid  xl:grid-cols-5 lg:grid-cols-4  md:grid-cols-3  grid-cols-2 lg:gap-[16px] md:gap-[10px] gap-[8px]")
+                each item, index in products
+                    +productItem(item, index)
+            div(class=(`items-center justify-center mt-[18px]    ${products.length >= 5 ? "flex" : "hidden"} ` )   id="")
+                button( 
+                               
+                    data-total = products.length
+                    class="expandButton text-[#189eff] rounded-[4px] px-[14px] py-[8px] border-[1px] border-[#189eff] border-solid bg-transparent font-[400] mt-[10px]") Xem thêm
+                button( 
+                    data-total = products.length
+                    class="collapseButton text-[#189eff] rounded-[4px] px-[14px] py-[8px] border-[1px] border-[#189eff] border-solid bg-transparent font-[400] mt-[10px] hidden") Thu gọn
+    else 
+        div(class="text-[26px] font-[500] text-[#363636]") Không tìm thấy sản phẩm
+    script.
+        document.addEventListener("DOMContentLoaded", () => {
+            const expandButtons  = document.querySelectorAll(".expandButton")
+            const collapseButtons = document.querySelectorAll('.collapseButton');
+            let visibleCount  = 5;
+            const itemsPerLoad = 5; // 2 hàng (5 sản phẩm/hàng)
+            expandButtons.forEach(button => {
+                button.addEventListener(
+                    "click", () => {
+                        const nextVisibleCount = visibleCount + itemsPerLoad;
+                        const dataTotal = parseInt(button.getAttribute("data-total"))
+                            
+                        const products = button.closest('.list-product')
+                        const productsItems = products.querySelectorAll(".product-item")
+                        productsItems.forEach((item, index) => {
+                            if (index >= visibleCount && index < nextVisibleCount) {
+                                item.classList.remove('hidden');
+                            }
+                        });
+
+                        if (dataTotal <= nextVisibleCount){
+                            const div = button.closest("div")
+                            
+                            button.classList.add("hidden")
+                            // Hiển thị nút "Thu gọn"
+                            const buttonCollapse = div.querySelector(".collapseButton")
+                            console.log(buttonCollapse)
+                            buttonCollapse.classList.remove("hidden")
+                        }
+                    visibleCount = nextVisibleCount;
+                    }
+                )
+            })
+
+            collapseButtons.forEach(button => {
+                button.addEventListener("click" ,() => {
+                    const products = button.closest('.list-product')
+                    const productsItems = products.querySelectorAll(".product-item")
+                    productsItems.forEach((item, index) => {
+                        if (index >= 5) {
+                            item.classList.add('hidden');
+                        }
+                    });
+                    visibleCount = 5;
+                    button.classList.add("hidden")
+                    const dataTotal = parseInt(button.getAttribute("data-total"))
+                    if(dataTotal > 5 ){
+                        const div = button.closest("div")
+                        const buttonExpand = div.querySelector(".expandButton")
+                        buttonExpand.classList.remove("hidden")
+                    }
+                })
+            })
+
+            
+
+        })

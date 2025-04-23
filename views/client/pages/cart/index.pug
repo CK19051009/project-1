@@ -1,0 +1,85 @@
+extends ../../layouts/default.pug
+include ../../mixins/mixin.pug
+block main 
+    main(class = "mt-[26px] relative mb-[40px] ")
+        div(class="lg:text-[26px] text-[24px] font-[500] text-[black] mb-[16px]") #{pageTitle}
+        //- cart
+        div(class="flex w-full xl:flex-row flex-col items-start")
+            table(class="xl:w-[76%] w-full h-auto text-left" table-order) 
+                thead(class="head-cart") 
+                    tr(class="bg-[#e38383]")
+                        th(class="w-[5%]") 
+                            input(type="checkbox", class="size-[16px]" name="checkAll" )
+                        th(class="text-[14px] font-[400] lg:font-[500] lg:text-[16px]  w-[40%]")  Tất cả ( #{productCarts.products.length} sản phẩm ) 
+                        th(class="w-[20%] text-[14px] font-[400] lg:font-[500] lg:text-[16px]")  Đơn giá 
+                        th(class="w-[10%] text-[14px] font-[400] lg:font-[500] lg:text-[16px]")  Số lượng 
+                        th(class="w-[30%] text-[14px] font-[400] lg:font-[500] lg:text-[16px]")  Thành tiền 
+                        th(class="w-[5%] text-[14px] font-[400] lg:font-[500] lg:text-[16px]")   
+                            a(href="#") 
+                                i(class="fa-regular fa-trash-can")
+
+                tbody(class="tbody-cart")
+                    each item in productCarts.products
+                        tr 
+                            td 
+                                input(type="checkbox",value = item.product_id class="size-[18px]" price-product = item.newPrice quantity-product = item.quantity name="check")
+                            td(class="flex items-center lg:w-[320px] md:w-[240px] w-[160px]")
+                                img(src=item.thumbnail class="lg:w-[80px] lg:h-[80px] size-[60px] md:block hidden rounded-[8px] mr-[12px] lg:mr-[20px]")
+                                a(href="#" class="")
+                                    span(class="lg:text-[16px] text-[12px] font-[400] lg:font-[400] line-clamp-2  hover:text-[#5151ec]")  #{item.title}
+                            td 
+                                span(class="lg:text-[14px] text-[12px] font-[400] lg:font-[500] text-[black]")   #{item.newPrice.toLocaleString()}
+                                sup(class="underline text-[black] lg:text-[14px] font-[500] text-[12px]") đ
+                            td 
+                                form(action=`/cart/change/${item.product_id}`, form-change-product method="POST")
+                                    div(class="border-[1px]  border-solid border-[#e0e0e0] rounded-[4px] flex items-center justify-center ")
+                                        button(type="button" class=" border-r-[1px] border-r-solid border-r-[#e0e0e0] px-[8px] text-center font-[400] text-[18px] md:font-[500] md:text-[20px]" button-prev-quantity="-") - 
+                                        input(type="number"  product-quantity value = item.quantity min = 1 class=" w-[30px] outline-none text-center font-[400] md:font-[500] text-[13px] md:text-[16px] " name = "quantity")
+                                        button(type="button" class=" border-l-[1px] border-l-solid border-l-[#e0e0e0] px-[8px] text-center font-[400] text-[18px] md:font-[500] md:text-[20px]" button-prev-quantity="+") + 
+                   
+                            td 
+                                span(class="text-[14px] font-[500] text-[red]") #{item.totalPrice.toLocaleString()} 
+                                sup(class="underline text-[red] lg:text-[14px] font-[500] text-[12px] ") đ
+                            td 
+                                button(button-path=`/cart/delete/${item.product_id}`) 
+                                    i(class="fa-regular fa-trash-can cursor-pointer hover:text-[red]")
+
+
+            form(action="/cart/checkout", method="POST" class="hidden" form-checkout-order)
+                input(type="text" name="ids")          
+
+            //- cart
+
+
+            //- pay
+            div(class="lg:ml-[20px] mt-[20px] xl:mt-[0px] md:w-[36%] sm:w-[44%] w-[60%]  xl:w-[24%] self-end")
+                div(class="rounded-[8px] p-[12px] bg-[#ffffff]")
+                    span(class="lg:text-[16px] text-[15px] font-[400] lg:font-[500] text-[black]") Khuyến mãi 
+                div(class="rounded-[8px] p-[12px] bg-[#ffffff] mt-[12px]")
+                    div(class="py-[8px] border-b-[1px] border-b-solid border-b-[#d1d1d9]")
+                        div(class="flex justify-between")
+                            div(class="md:text-[14px] font-[400] text-[12px] md:font-[500] text-[#808089]") Tạm tính 
+                            //- div(class="text-[14px] font-[500] text-[#808089]") Tổng tiền hàng 
+                            div(class="") 
+                                span(class="text-[16px] font-[500] text-[black]" total-prices) 0 
+                                sup(class="underline text-[black] lg:text-[12px] font-[400] text-[10px] ") đ
+                        div(class="flex justify-between mt-[10px]")
+                            div(class="md:text-[14px] font-[400] text-[12px] md:font-[500] text-[#808089]") Giảm giá
+                            div(class="") 
+                                span(class="md:text-[14px] font-[400] text-[12px] md:font-[500] text-[black]") 0 
+                                sup(class="underline text-[black] lg:text-[12px] font-[400] text-[10px] ") đ
+                    div(class="mt-[10px]")
+                        div(class="flex justify-between ")
+                            div(class="md:font-[500] text-[12px] font-[400] md:text-[14px] text-[black]") Tổng tiền thanh toán 
+                            div(class="md:font-[500] text-[12px] font-[400] md:text-[14px] text-[red] text-right" total-payment) Vui lòng chọn sản phẩm 
+
+                        div(class="mt-[10px]")
+                            button(class="py-[6px] rounded-[8px] active-button w-[100%]" button-buy-checkout) 
+                                p(class="md:text-[16px] text-[13px] font-[400] md:font-[500]" buy-product href="") Mua hàng(0)
+
+                    
+
+                
+
+
+            //- pay

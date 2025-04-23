@@ -1,0 +1,71 @@
+extends ../../layouts/default.pug
+
+include ../../mixins/mixin.pug
+
+block category
+    include ../../partials/category.pug
+
+block main 
+    div(class=" ")
+        div(class="text-[28px] mb-[18px] p-[16px] rounded-[12px] bg-[#ffffff] font-[600] text-[#27272a]") #{pageTitle}
+        div(class="mb-[18px] px-[16px] py-[12px] rounded-[12px] bg-[#ffffff]")
+            div(class="text-[16px] text-[#27272a] font-[500]") Khám phá theo danh mục
+            div(class="grid grid-cols-5 mt-[20px]")
+                each item in subCategorys
+                    div(class="flex flex-col items-center")
+                        div(class="flex items-center justify-center")
+                            img(src=item.thumbnail, alt=item.title, class="md:size-[88px] size-[60px] rounded-[50px]" srcset="")
+                        div(class="mt-[4px]")
+                            a(href=`/category/${item.slug}`)
+                                span(class="text-[14px] text-[#27272a]  text-center font-[500]") #{item.title}
+
+
+        div(class="mb-[18px] px-[16px] py-[12px] rounded-[12px] bg-[#ffffff] hidden")
+            div(class="text-[16px] text-[#27272a] font-[500]") Tất cả sản phẩm
+            div(class="")
+                div(class="flex items-center justify-between")
+                    div(class="flex-1")
+                        div(class="font-[400] text-[12px] text-[#808089] mb-[4px]") Thương hiệu
+                        div(class="flex items-center justify-between pr-[12px] border-r-solid border-r-[1px] border-r-[#ddde3]")
+                            button(class="px-[12px] py-[6px] bg-transparent border-[1px] border-[#DDDDE3] border-solid rounded-[12px]")
+                                span(class="text-[14px] text-[#27272a] font-[450]") OLSG
+
+                            button(class="px-[12px] py-[6px] bg-transparent border-[1px] border-[#DDDDE3] border-solid rounded-[12px]")
+                                span(class="text-[14px] text-[#27272a] font-[450]") URGREEN
+                            button(class="px-[12px] py-[6px] bg-transparent border-[1px] border-[#DDDDE3] border-solid rounded-[12px]")
+                                span(class="text-[14px] text-[#27272a] font-[450]") Nillkin
+                            button(class="px-[12px] py-[6px] bg-transparent border-[1px] border-[#DDDDE3] border-solid rounded-[12px]")
+                                span(class="text-[14px] text-[#27272a] font-[450]") Hoco
+                            button(class="px-[12px] py-[6px] bg-transparent border-[1px] text-[14px] text-[#27272a] border-[#DDDDE3] border-solid rounded-[12px]")
+                                <i class="fa-solid fa-angle-down "></i>
+                    div(class="flex-1 ")
+                        div(class="font-[400] text-[12px] text-[#808089] mb-[4px]") Thiết bị phù hợp
+                        div(class="flex items-center justify-between px-[12px] border-r-solid border-r-[1px] border-r-[#ddde3]")
+                            button(class="px-[12px] py-[6px] bg-transparent border-[1px] border-[#DDDDE3] border-solid rounded-[12px]")
+                                span(class="text-[14px] text-[#27272a] font-[450]") Sam Sung
+
+                            button(class="px-[12px] py-[6px] bg-transparent border-[1px] border-[#DDDDE3] border-solid rounded-[12px]")
+                                span(class="text-[14px] text-[#27272a] font-[450]") Iphone
+                            button(class="px-[12px] py-[6px] bg-transparent border-[1px] border-[#DDDDE3] border-solid rounded-[12px]")
+                                span(class="text-[14px] text-[#27272a] font-[450]") Oppo 
+                            button(class="px-[12px] py-[6px] bg-transparent border-[1px] border-[#DDDDE3] border-solid rounded-[12px]")
+                                span(class="text-[14px] text-[#27272a] font-[450]") Xiaomi 
+                            button(class="px-[12px] py-[6px] bg-transparent border-[1px] text-[14px] text-[#27272a] border-[#DDDDE3] border-solid rounded-[12px]")
+                                <i class="fa-solid fa-angle-down "></i>
+                    div(class="ml-[12px] ")
+                        div(class="font-[400] text-[12px] text-[#808089] mb-[4px]") Chất liệu sản phẩm
+                        div(class="flex items-center justify-between")
+                            button(class="px-[12px] py-[6px] bg-transparent border-[1px] border-[#DDDDE3] border-solid rounded-[12px]")
+                                span(class="text-[14px] text-[#27272a] font-[450]") Nhựa dẻo
+
+                            button(class="px-[12px] py-[6px] bg-transparent border-[1px] border-[#DDDDE3] border-solid rounded-[12px]")
+                                span(class="text-[14px] text-[#27272a] font-[450]") Nhựa cứng
+                            button(class="px-[12px] py-[6px] bg-transparent border-[1px] border-[#DDDDE3] border-solid rounded-[12px]")
+                                span(class="text-[14px] text-[#27272a] font-[450]") Bao da
+                            button(class="px-[12px] py-[6px] bg-transparent border-[1px] text-[14px] text-[#27272a] border-[#DDDDE3] border-solid rounded-[12px]")
+                                <i class="fa-solid fa-angle-down "></i>
+        div(class=" py-[12px]  px-[12px]  rounded-[12px] bg-[#ffffff]")
+            div(class="text-[16px] text-[#27272a] font-[500] mb-[12px]") Tất cả sản phẩm
+            div(class="grid  xl:grid-cols-5 lg:grid-cols-4  md:grid-cols-3  grid-cols-2 lg:gap-[16px] md:gap-[10px] gap-[8px] ")
+                each product in products 
+                    +productItem(product)

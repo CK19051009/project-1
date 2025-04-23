@@ -1,0 +1,132 @@
+div(class="w-[20%] xl:block hidden")
+            div(class="mb-[12px] pl-[6px] flex items-center")
+                img(src="https://salt.tikicdn.com/desktop/img/avatar.png", class="size-[45px]" alt="")
+                div(class="flex flex-col ml-[12px]")
+                    span(class="text-[#333333] font-[400] text-[12px] ") Tài khoản của
+                    span(class="text-[#333333] lg:text-[14px] xl:text-[16px] font-[500]") #{client.fullname}
+            
+            div(class="")
+                nav(class="")
+                    ul 
+                        - 
+                            var  buttons = [
+                                {
+                                    title: "Thông tin tài khoản",
+                                    url: "/customer/profile",
+                                    image: "",
+                                    icon: "fa-solid fa-user"
+                                },
+                                {
+                                    title: "Thông báo của tôi",
+                                    url: "",
+                                    image: "",
+                                     icon: "fa-solid fa-bell"
+                                },
+                                {
+                                    title: "Quản lý đơn hàng",
+                                    url: "/customer/order",
+                                    image: "",
+                                     icon: "fa-solid fa-bars-progress"
+                                },
+                                {
+                                    title: "Quản lý đổi trả",
+                                    url: "",
+                                    image: "https://frontend.tikicdn.com/_desktop-next/static/img/icons/order_return.svg",
+                                     icon: ""
+                                },
+                                {
+                                    title: "Số địa chỉ",
+                                    url: "",
+                                    image: "",
+                                     icon: "fa-solid fa-location-dot"
+                                },
+                                {
+                                    title: "Thông tin thanh toán",
+                                    url: "",
+                                    image: "",
+                                     icon: "fa-regular fa-credit-card"
+                                },
+                                {
+                                    title: "Đánh giá sản phẩm",
+                                    url: "",
+                                    image: "https://frontend.tikicdn.com/_desktop-next/static/img/account/reviewhub.png",
+                                     icon: ""
+                                },
+                                {
+                                    title: "Sản phẩm bạn đã xem",
+                                    url: "",
+                                    image: "",
+                                     icon: "fa-solid fa-eye"
+                                },
+                                {
+                                    title: "Sảm phẩm bạn yêu thích",
+                                    url: "",
+                                    image: "",
+                                     icon: "fa-solid fa-heart"
+                                },
+                                {
+                                    title: "Nhận xét của tôi",
+                                    url: "",
+                                    image: "",
+                                     icon: "fa-solid fa-comment"
+                                },
+                                {
+                                    title: "Chia sẻ có lời",
+                                    url: "",
+                                    image: "https://frontend.tikicdn.com/_desktop-next/static/img/share-to-earn/icon-s2e.svg",
+                                     icon: ""
+                                },
+                                {
+                                    title: "Hợp đồng bảo hiểm",
+                                    url: "",
+                                    image: "https://frontend.tikicdn.com/_desktop-next/static/img/account/insurance.png",
+                                     icon: ""
+                                },
+                                {
+                                    title: "Mua trước trả sau",
+                                    url: "",
+                                    image: "https://salt.tikicdn.com/ts/tmp/95/15/2d/4b3d64b220f55f42885c86ac439d6d62.png",
+                                     icon: ""
+                                },
+                                {
+                                    title: "Mã giảm giá",
+                                    url: "",
+                                    image: "https://frontend.tikicdn.com/_desktop-next/static/img/mycoupon/coupon_code.svg",
+                                     icon: ""
+                                },
+                                {
+                                    title: "Astra của bạn",
+                                    url: "",
+                                    image: "https://salt.tikicdn.com/ts/upload/4b/4d/c3/05e31a32a296bd21da7d0403e6e2c87b.png",
+                                     icon: ""
+                                },
+                                {
+                                    title: "Quản lý xu của tôi",
+                                    url: "",
+                                    image: "",
+                                     icon: "fa-solid fa-coins"
+                                },
+                                {
+                                    title: "BookCare của tôi",
+                                    url: "",
+                                    image: "https://frontend.tikicdn.com/_desktop-next/static/img/icons/bookcare.svg",
+                                     icon: ""
+                                },
+                                {
+                                    title: "Hỗ trợ khách hàng",
+                                    url: "",
+                                    image: "",
+                                     icon: "fa-solid fa-headphones"
+                                }
+                            ]
+                        each item in buttons
+                            li(class="flex items-center py-[7px] px-[18px]")
+                                if(item.icon)
+                                    i(class=`${item.icon} mr-[22px] size-[24px] text-[#808089]`)
+                                else if(item.image)
+                                    img(
+                                    src=item.image 
+                                    class="size-[24px] mr-[22px]" 
+                                    alt=""
+                                    )
+                                a(href=item.url class="text-[#4a4a4a] block w-full text-start font-[400] text-[13px]") #{item.title} 

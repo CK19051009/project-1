@@ -1,0 +1,21 @@
+const routerHome = require("../../router/client/home.route");
+const routerProduct = require("../../router/client/product.route");
+const routerCart = require("../../router/client/cart.route");
+const routerCategory = require("../../router/client/category.route");
+const cartMiddleware = require("../../middlewares/client/cart.middelware");
+const categoryMiddleware = require("../../middlewares/client/category.middelware");
+const routerChat = require("../../router/client/chat.route");
+const routerAuth = require("../../router/client/auth.route");
+const authuMiddlewares = require("../../middlewares/client/auth.middlewares");
+const routerAccount = require("./account.route");
+module.exports = (app) => {
+  app.use(cartMiddleware.createCart);
+  app.use(categoryMiddleware.category);
+  app.use("/", routerHome);
+  app.use("/product", routerProduct);
+  app.use("/cart", authuMiddlewares.authMiddleware, routerCart);
+  app.use("/category", routerCategory);
+  app.use("/chat", authuMiddlewares.authMiddleware, routerChat);
+  app.use("/auth", routerAuth);
+  app.use("/customer", authuMiddlewares.authMiddleware, routerAccount);
+};

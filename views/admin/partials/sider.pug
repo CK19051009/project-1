@@ -1,0 +1,73 @@
+-
+    var lists = [
+        {
+            title: "Trang chủ",
+            role: "",
+            url:`${urlAdmin}/dashboard`,
+            icon: "fa-solid fa-gauge"
+        },
+        {
+            title: "Quản lý tài khoản",
+            role: "account_view",
+            url:`${urlAdmin}/account`,
+            icon: "fa-regular fa-user"
+        },
+        {
+            title: "Quản lý quyền",
+            role: "role_view",
+            url:`${urlAdmin}/roles`
+            ,
+            icon: "fa-solid fa-gauge"
+        },
+        {
+            title: "Quản lý danh mục",
+            role: "product-category_view",
+            url:`${urlAdmin}/product-category`,
+            icon: "fa-solid fa-chart-gantt"
+        },
+         {
+            title: "Quản lý sản phẩm",
+            role: "product_view",
+            url:`${urlAdmin}/products`,
+            icon: "fa-solid fa-layer-group"
+        },
+        {
+            title: "Quản lý đơn hàng",
+            role: "",
+            url:`${urlAdmin}/orders`,
+            icon: "fa-solid fa-truck"
+        },
+         {
+            title: "Đăng xuất",
+            role: "",
+            url:`${urlAdmin}/auth/logout`,
+            icon: "fa-regular fa-circle-xmark"
+        },
+    ]
+
+sider 
+        
+    div(class="xl:w-[240px] lg:w-[200px] sm:w-[180px] hidden sm:block py-[20px] h-[100vh]  bg-[#ffffff]")
+        div(class="flex items-start px-[12px] mb-[20px] ")
+            a(href="/admin/dashboard")  
+                span(class="text-[20px] font-[700] text-[#0a68ff] ") ADMIN
+
+        nav(class="")
+            ul(class="")
+                each item in lists 
+                    if(item.role !== "")
+                        if (role.permissions.includes(item.role)) 
+                            li(
+                                sider-item-admin
+                                class="border-b-[1px] border-solid border-[white] group hover:bg-[#bbd3fa] px-[8px] xl:px-[12px] rounded-[12px]")
+                                    a(href=item.url class="block w-full text-[#27272a] py-[10px] xl:py-[15px]") 
+                                        i(class=("text-[#0a68ff] mr-[10px]" + ` ${item.icon}`))
+                                        span(class="xl:text-[18px] lg:text-[16px] text-[14px] font-[500] text-[#0a68ff]  ") #{item.title}
+                    else
+                        li(
+                            sider-item-admin
+                            class="border-b-[1px] border-solid border-[white] py-[15px] group hover:bg-[#bbd3fa] px-[8px] xl:px-[12px] rounded-[12px]")
+                                    a(href=item.url class="block w-full text-[#27272a]") 
+                                        i(class=("text-[#0a68ff] mr-[10px]" + ` ${item.icon}`))
+                                        span(class="xl:text-[18px] lg:text-[16px] text-[14px] font-[500] text-[#0a68ff]  ") #{item.title}
+                        

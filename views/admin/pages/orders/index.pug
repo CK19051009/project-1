@@ -1,0 +1,130 @@
+extends ../../layouts/default.pug
+include ../../mixins/mixin.pug
+block main 
+    div(class="")
+        div(class="")
+            +titleAdmin(pageTitle)
+
+        div(class="mt-[30px]")
+            table(class="w-full table_role")
+                thead(class="thead_role") 
+                    tr 
+                        th(class="w-[5%]") STT 
+                        th(class="w-[20%]") Mã đơn hàng
+                        th(class="w-[20%]") Tên khách hàng
+                        th(class="w-[20%]") Giá đơn hàng 
+                        th(class="w-[20%]") Trạng thái
+                        th(class="w-[15%]") Thao tác
+                tbody(class="tbody_role")
+                    each order , key in orders
+                        tr(class="text-center")
+                            td #{key + 1}
+                            td #{order.id}
+                            td #{order.userInfo.fullname}
+                            td #{order.totalAmount.toLocaleString('vi-VN')} VND
+                            td  
+                                if order.status == 'pending'
+                                    p(class="")  Đang chờ xử lý 
+                                else if order.status == "comfirmed"
+                                    p(class="")  Đã xác nhận
+                                else if order.status == "shipped"
+                                    p(class="")  Đang vận chuyển
+                                else if order.status == "delivered"
+                                    p(class="")  Đã giao
+                                else if order.status == "cancelled"
+                                    p(class="")  Đã hủy
+                                    
+                            td 
+                                button(
+                                    button-active-overlay
+                                    order-id = order.id
+                                    class="bg-[#3ec43e] rounded-[8px] text-[18px] text-[white] font-[500] px-[6px] py-[5px] mr-[10px] ") 
+                                                                i(class="fa-regular fa-pen-to-square size-[20px]")
+                                button( class="bg-[#e34d4d] rounded-[8px] text-[18px] font-[500]  text-[white] px-[6px] py-[5px]"   ) 
+                                                                i(class="fa-regular fa-trash-can  ")
+
+
+
+        div(
+            id ="loginOverlay-admin"
+            class="fixed  inset-0 flex hidden  items-center justify-center bg-black bg-opacity-50 z-[1000]")
+            div(class="w-[480px] h-auto bg-[#ffffff] rounded-[12px] relative flex flex-col flex-wrap p-[20px]")
+                button(
+                        button-close-overlay-admin
+                        
+                        class="absolute right-[-18px] bg-[#ffffff] font-[400] rounded-[50%] text-[#808089] p-[10px] top-[-18px]  ") 
+                        i(class="fa-solid fa-xmark text-[24px] ")
+                div(class="text-[20px] font-[400] ") Chuyển trạng thái đơn hàng 
+
+                - 
+                    var buttons =[
+                        {
+                            title: "Xác nhận đơn hàng",
+                            color: "green",
+                            url : `${urlAdmin}/orders/change-status/comfirmed`,
+                            status: "comfirmed"
+                        },
+                        {
+                            title: "Đang giao hàng",
+                            color: "red",
+                            url : `${urlAdmin}/orders/change-status/shipped`,
+                            status: "shipped"
+                        },
+                        {
+                            title: "Đã nhận hàng",
+                            color: "blue",
+                            url : `${urlAdmin}/orders/change-status/delivered`
+                        },
+                    ]
+                div(class="mt-[30px] flex flex-wrap gap-[12px]")
+                    each button in buttons 
+                        button(
+                            status-order 
+                            href=button.url
+                            class=`mx-[12px] text-[14px] font-[400] rounded-[4px] border-[1px] border-solid border-[${button.color}] text-white px-[8px] py-[6px] bg-[${button.color}]`) #{button.title}
+    script.
+        // clost overlay
+        const buttonCloseOverlay = document.querySelector("[button-close-overlay-admin]");
+        const overlay = document.querySelector("#loginOverlay-admin");
+        const buttonActiveOverlay = document.querySelectorAll("[button-active-overlay]")
+        
+        if (overlay) {
+            // mở overlay
+            buttonActiveOverlay.forEach((button) => {
+                
+                button.addEventListener("click" , () => {
+                    overlay.classList.remove("hidden");
+                    const orderId = button.getAttribute("order-id")
+                    const listButtonStatus = document.querySelectorAll('[status-order]')
+                    listButtonStatus.forEach(buttonStatus => {
+                        buttonStatus.addEventListener("click", () => {
+
+                        const href = buttonStatus.getAttribute("href")
+                        const action = href+'/'+orderId 
+                        window.location.href = action
+                        })
+                    })
+
+                })
+            })
+            // Đóng khi click nút đóng
+            if (buttonCloseOverlay) {
+                buttonCloseOverlay.addEventListener("click", () => {
+                overlay.classList.add("hidden");
+                });
+            }
+
+            // Đóng khi click bên ngoài popup
+            overlay.addEventListener("click", (e) => {
+                if (e.target === overlay) {
+                overlay.classList.add("hidden");
+                }
+            });
+
+            // Đóng khi nhấn phím ESC
+            document.addEventListener("keydown", (e) => {
+                if (e.key === "Escape" && !overlay.classList.contains("hidden")) {
+                overlay.classList.add("hidden");
+                }
+            });
+        }

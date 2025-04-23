@@ -1,0 +1,145 @@
+extends ../../layouts/default.pug
+
+mixin titleCustomer(title)
+    p(class="text-[16px] text-[#64646d] font-[400]") #{title}
+
+mixin labelLeft(title)
+    span(class="font-[400] text-[14px] text-[#333333]")  #{title}
+mixin contentRight(content)
+    span(class="text-[14px] text-[#38383d] ml-[6px] font-[400]") #{content}
+mixin buttonUpdate(text, color, url)
+    a(
+        href = url
+        class=`text-[${color}] cursor-pointer border-[${color}] border-solid border-[1px] py-[4px] rounded-[4px]  bg-transparent md:text-[14px] text-[13px] font-[450] md:font-[500] px-[12px]`) #{text}
+block main 
+    div(class="flex items-start container mx-auto")
+        include ../../partials/menucustomer.pug
+                    
+        div(class="flex-1 flex flex-col")
+        
+            div(class="text-[#000000] mt-[4px] mb-[12px] font-[400] text-[20px]") #{pageTitle}
+            div(class="bg-[#ffffff]")
+                div(class="flex items-center justify-between text-center") 
+                    - 
+                        var lists = [
+                            {
+                                title: "Tất cả đơn hàng",
+                                status: "all",
+                                class: "text-[#1890ff]"
+                            },
+                            {
+                                title: "Đang xử lý",
+                                status: "pending"
+                            },
+                            {
+                                title: "Đã xác nhận",
+                                status: "comfirmed"
+                            },
+                            {
+                                title: "Đang vận chuyển",
+                                status: "shipped"
+                            },
+                            {
+                                title: "Đã giao",
+                                status: "delivered"
+                            },
+                            {
+                                title: "Đã hủy",
+                                status: "cancelled"
+                            },
+                        ]
+                    each item in lists
+                        button(
+                            button-status = item.status
+                            class=(`text-[#808089] md:text-[14px] text-[12px] py-[12px] w-full flex-1  ${item.class ? item.class : ""}` )) #{item.title}
+            form(
+                    action= "/customer/order"
+                    class=" flex items-center flex-1 sm:w-auto bg-[#ffffff] mt-[16px] border-[1px] py-[6px] border-solid border-[#dddde3] rounded-[8px] p-[10]"
+                      
+                     method="GET")
+                    button(class="ml-[20px] flex items-center size-[20px] ")
+                        i(class="fa-solid fa-magnifying-glass text-[#808089]")
+                    input(type="text",   placeholder="Tìm kiếm đơn hàng"   name="keyword" class="placeholder:text-[14px] placeholder:font-[400] focus:ring-[#288ad6] outline-0 flex-1 border-r-[1px] border-solid border-[#808089] ml-[4px] text-[13px] md:text-[16px] font-[500]" )
+                    
+                    button(type="submit" class="md:font-[400] text-[13px]  font-[300] text-[#0a68ff] px-[12px]") Tìm đơn hàng
+            if(orders.length == 0)
+                div(class="bg-[#ffffff] p-[35px] my-[16px]")
+                    div(class="flex flex-col items-center justify-center")
+                        img(
+                            class= "md:size-[200px] size-[180px]  rounded-[50px]"  src="https://frontend.tikicdn.com/_desktop-next/static/img/account/empty-order.png", alt="")
+                        span(class="my-[15px] text-[16px] font-[400] text-[#38383d]") Chưa có đơn hàng nào
+            else
+                each order in orders 
+                    each item in order.products
+                        div(class="p-[16px] my-[18px] bg-[#ffffff] text-[13px] rounded-[4px]")
+                            //- p= `DEBUG: order.status = "${order.status}", type = ${typeof order.status}`
+                            if order.status == 'pending'
+                                p(class="md:text-[14px] text-[12px] text-[#808089] font-[400] mb-[12px]")  Đang chờ xử lý 
+                            else if order.status == "comfirmed"
+                                p(class="md:text-[14px] text-[12px] text-[#808089] font-[400] mb-[12px]")  Đã xác nhận 
+
+                            else if order.status == "shipped"
+                                p(class="md:text-[14px] text-[12px] text-[#808089] font-[400] mb-[12px]")  Đang vận chuyển
+                            else if order.status == "delivered"
+                                p(class="md:text-[14px] text-[12px] text-[#808089] font-[400] mb-[12px]")  Đã giao
+                            else if order.status == "cancelled"
+                                p(class="md:text-[14px] text-[12px] text-[#808089] font-[400] mb-[12px]")  Đã hủy
+                            div(class="py-[16px] border-y-[1px] border-solid border-[#e6e6e6] flex items-start justify-between ")
+                                div(class="flex items-center justify-between")
+                                    div(
+                                        style=`background-image: url(${item.thumbnail});`
+                                        class="rounded-[4px]  border-[1px] border-solid border-[#e6e6e6] w-[80px] h-[80px] bg-cover bg-no-repeat bg-center")
+                                    div(class="flex flex-col mx-[12px]")
+                                        p(class="text-[#000000] md:text-[13px] text-[12px] font-[400] mb-[6px]") #{item.title}
+                                        img(
+                                            class="md:w-[114px] w-[0px] sm:block hidden sm:w-[100px]" 
+                                            src="https://salt.tikicdn.com/ts/ta/b1/3f/4e/cc3d0a2dd751a7b06dd97d868d6afa56.png", alt="", srcset="")
+                                div(class="")
+                                        p(class="md:text-[14px] text-[13px] font-[400] text-[#38383d]") #{item.totalPrice.toLocaleString('vi-VN')}
+                                            sup(class="md:text-[14px] text-[13px] font-[400] text-[#38383d]") đ
+
+                            div(class="flex justify-end flex-col items-end   my-[18px]")
+                                div(class="flex")
+                                    p(class="md:text-[17px] text-[15px] font-[400] text-[#808089] mr-[8px] ") Tổng tiền:
+                                    p(class="md:text-[17px] text-[15px] font-[400] text-[#38383d]") #{item.totalAmount.toLocaleString('vi-VN')}
+                                        sup(class="text-[14px] font-[400] text-[#38383d]") đ
+                                div(class="flex mt-[12px] items-end ml-[20px]")
+                                    if order.status == 'pending'
+                                        +buttonUpdate("Hủy đơn", "red", `/customer/order/cancel/${order.id}`)
+                                    else 
+                                        +buttonUpdate("Mua lại", "#0b74e5")
+                                    span(class="mx-[6px]")
+                                    +buttonUpdate("Xem chi tiết" ,"#0b74e5")
+
+    script.
+
+        const buttons = document.querySelectorAll('[button-status]')
+        function updateActiveButton(activeStatus) {
+            buttons.forEach(button => {
+                const status = button.getAttribute('button-status');
+                if (status === activeStatus) {
+                button.classList.add('active');
+                } else {
+                button.classList.remove('active');
+                }
+            });
+        }
+        // Lấy trạng thái hiện tại từ URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const currentStatus = urlParams.get('status') || 'all'; // Mặc định là 'all'
+        updateActiveButton(currentStatus);
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                const status = button.getAttribute('button-status')
+                // Cập nhật class active trước khi chuyển trang
+                updateActiveButton(status);
+           
+                if(status === 'all'){
+                    window.location.href = `/customer/order`
+                }
+                else{
+
+                    window.location.href = `/customer/order?status=${status}`
+                }
+            })
+        })

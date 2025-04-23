@@ -1,0 +1,21 @@
+div(class="lg:w-[200px] w-0 md:w-[160px]")
+    div(class="w-full bg-[#ffffff]  px-[12px] py-[12px] rounded-[10px] mr-[12px] ")
+        div(class="text-[#27272a] text-[18px] mb-[8px] ") Danh mục
+        div(class="")
+            nav 
+                ul
+                    each item in category
+                        li(class=" flex items-center px-[7px] rounded-[12px] py-[6px] hover:bg-[#d9cccc] justify-start ")
+                                    img(src=item.thumbnail, class="size-[32px] mr-[6px]" alt="")
+                                    a(href=`/category/${item.slug}`)
+                                        span(class="text-[#27272a] lg:text-[13px] md:text-[11px] font-[400]") #{item.title} 
+    //- div(class="mt-[18px] w-[200px] bg-[#ffffff]  px-[12px] py-[12px] rounded-[10px] mr-[12px]")
+    //-         div(class="text-[#27272a] text-[18px] mb-[8px] ") Tiện ích
+    //-         div(class="")
+    //-             nav 
+    //-                 ul
+    //-                     //- each item in category
+    //-                     //-     li(class="mb-[12px] flex items-center justify-start ")
+    //-                     //-             img(src="https://salt.tikicdn.com/cache/100x100/ts/category/54/c0/ff/fe98a4afa2d3e5142dc8096addc4e40b.png.webp", class="size-[32px]" alt="")
+    //-                     //-             a(href=`/category/${item.slug}`)
+    //-                     //-                 span(class="text-[#27272a] text-[14px] font-[400]") #{item.title}                                         

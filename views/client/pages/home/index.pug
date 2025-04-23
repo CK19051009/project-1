@@ -1,0 +1,190 @@
+extends ../../layouts/default.pug
+include ../../mixins/mixin.pug
+
+        
+block category
+    include ../../partials/category.pug
+    
+block main
+    
+    div(class="")
+        div(class="flex md:p-0 p-[16px]  mx-auto container ")
+
+            div(class="flex-1 h-[auto] grid grid-cols-1 gap-y-[16px]")
+
+                div(class="rounded-[8px] bg-[#ffffff] p-[12px] w-[100%] group  h-[350px] swiper mySwiperAds")
+                    div(class="swiper-wrapper w-[100%]  h-[350px] ")
+                        div(class="lg:w-[50%] w-[100%] swiper-slide")
+                            img(src="https://salt.tikicdn.com/cache/w750/ts/tikimsp/62/a8/49/0ef4ead8e9dc7d7cf0faf973dd61f87f.png.webp" class="w-[100%] h-[100%] rounded-[8px] ")
+                        div(class="lg:w-[50%] w-[100%] swiper-slide")
+                            img(src="https://salt.tikicdn.com/cache/w750/ts/tikimsp/13/4a/83/3388da557e8fb3e0d333bd3f8c69481e.jpg.webp" class="w-[100%] h-[100%] rounded-[8px]")
+                        div(class="lg:w-[50%] w-[100%] swiper-slide")
+                            img(src="https://salt.tikicdn.com/cache/w750/ts/tikimsp/75/01/3e/20171eaafdb7d79d9419548061f5e627.png.webp" class="w-[100%] h-[100%] rounded-[8px]")
+                        div(class="lg:w-[50%] w-[100%] swiper-slide")
+                            img(src="https://salt.tikicdn.com/cache/w750/ts/tikimsp/a4/57/0a/1121685dd2807258c7f20fabca96cb25.jpg.webp" class="w-[100%] h-[100%] rounded-[8px]")
+                        div(class="lg:w-[50%] w-[100%] swiper-slide")
+                            img(src="https://salt.tikicdn.com/cache/w750/ts/tikimsp/13/4a/83/3388da557e8fb3e0d333bd3f8c69481e.jpg.webp" class="w-[100%] h-[100%] rounded-[8px]")
+                    div(class="swiper-button-next hidden group-hover:flex")
+                    div(class="swiper-button-prev hidden group-hover:flex")
+                    div(class="swiper-pagination")
+                    
+                div(class="rounded-[8px] hidden md:block bg-[#ffffff] p-[16px]")
+                    div(class="grid grid-cols-10 gap-[16px] ")
+                        - 
+                            var icon = [
+                                {
+                                    title: "TOP DEAL",
+                                    image: "https://salt.tikicdn.com/ts/upload/2f/52/8e/00ab5fbea9d35fcc3cadbc28d7c6b14e.png",
+                                    style: "text-[red]"
+                                },
+                                {
+                                    title: "Tiki Trading",
+                                    image: "https://salt.tikicdn.com/ts/upload/72/8d/23/a810d76829d245ddd87459150cb6bc77.png",
+                                    style: ""
+                                },
+                                {
+                                    title: "Coupon siêu hot",
+                                    image: "https://salt.tikicdn.com/ts/upload/8b/a4/9f/84d844f70e365515b6e4e3e745dac1d5.png",
+                                    style: ""
+                                },
+                                {
+                                    title: "Xả kho giảm nửa giá",
+                                    image: "https://salt.tikicdn.com/ts/upload/a5/d8/06/cb6ff520f12973013c81a8b14ad5e5b3.png",
+                                    style: ""
+                                },
+                                {
+                                    title: "Rẻ chấn động",
+                                    image: "https://salt.tikicdn.com/ts/upload/4d/fc/72/c985189450cb95a2eca994e711739e7a.png",
+                                    style: ""
+                                },
+                                {
+                                    title: "Du lịch sành điệu",
+                                    image: "https://salt.tikicdn.com/ts/upload/2c/22/e0/d9d268206e9224b0f8ec5efb4095fdad.png",
+                                    style: ""
+                                },
+                                {
+                                    title: "Hạ nhiệt thần tốc",
+                                    image: "https://salt.tikicdn.com/ts/upload/c6/9c/4b/ddd8330163b9432e5f81b8429ca8b8f0.png",
+                                    style: ""
+                                },
+                                {
+                                    title: "Đón đầu xu hướng",
+                                    image: "https://salt.tikicdn.com/ts/upload/b2/05/8a/cbdd6befd51ca4945290f6df9522ac52.png",
+                                    style: ""
+                                },
+                                {
+                                    title: "Mua là có quà",
+                                    image: "https://salt.tikicdn.com/ts/upload/b5/71/55/e2ccf948e0d8b14a646d2b8fe07cac37.png",
+                                    style: ""
+                                },
+                                {
+                                    title: "Bộ sưu tập thể thao",
+                                    image: "https://salt.tikicdn.com/ts/upload/54/cf/ff/cbbbbe1d425d3c04b656a88729b145b4.png",
+                                    style: ""
+                                }
+                            ];
+                        each item in icon 
+
+                            div(class="flex flex-col items-center flex-wrap")
+                                div(class="flex items-center ")
+                                    img(
+                                        class="lg:size-[44px] md:size-[30px] sm:size-[25px] size-[20px]  rounded-[16px]"
+                                        src=item.image alt="")
+                                span(class=("lg:text-[14px] md:text-[12px] text-[10px] text-[#27272A] text-center font-[400] mt-[4px] " + `${item.style}`)) #{item.title}
+
+
+                div(class="rounded-[8px] list-product  bg-[#ffffff] py-[10px] px-[16px]")
+                    +boxTitleProduct("Sản phẩm mới nhất")
+                    div(class="grid  xl:grid-cols-5 lg:grid-cols-4  md:grid-cols-3  grid-cols-2 lg:gap-[16px] md:gap-[10px] gap-[8px]")
+                        each item, index in productNew 
+                            +productItem(item , index)
+                    div(class=(`items-center justify-center mt-[18px]    ${productNew.length >= 5 ? "flex" : "hidden"} `)   id="")
+                            button(
+                                data-total = productNew.length
+                                  class="expandButton text-[#189eff] md:px-[14px] px-[8px] py-[4px] md:py-[8px] rounded-[4px]  border-[1px] border-[#189eff] border-solid bg-transparent font-[400] mt-[10px]") Xem thêm
+                            button( 
+                                data-total = productNew.length
+                                 class="collapseButton text-[#189eff] md:px-[14px] px-[8px] py-[4px] md:py-[8px] rounded-[4px]  border-[1px] border-[#189eff] border-solid bg-transparent font-[400] mt-[10px] hidden") Thu gọn
+                            
+                div(class="rounded-[8px] bg-[#ffffff] py-[10px] px-[16px]")
+                    +boxTitleProduct("Sản phẩm nổi bật")
+
+        
+                
+                    div(class=" list-product ")
+                        div(class="grid  xl:grid-cols-5 lg:grid-cols-4  md:grid-cols-3  grid-cols-2 lg:gap-[16px] md:gap-[10px] gap-[8px]")
+                            each item  in newProductFeature
+                                +productItem(item)
+                        div(class=(`items-center justify-center mt-[18px]    ${newProductFeature.length >= 5 ? "flex" : "hidden"} ` )   id="")
+                            button( 
+                               
+                                data-total = newProductFeature.length
+                                 class="expandButton text-[#189eff] rounded-[4px] md:px-[14px] px-[8px] py-[4px] md:py-[8px] border-[1px] border-[#189eff] border-solid bg-transparent font-[400] mt-[10px]") Xem thêm
+                            button( 
+                                data-total = newProductFeature.length
+                                 class="collapseButton text-[#189eff] rounded-[4px] md:px-[14px] px-[8px] py-[4px] md:py-[8px] border-[1px] border-[#189eff] border-solid bg-transparent font-[400] mt-[10px] hidden") Thu gọn
+                            
+    script.
+        document.addEventListener("DOMContentLoaded", () => {
+            const expandButtons  = document.querySelectorAll(".expandButton")
+            const collapseButtons = document.querySelectorAll('.collapseButton');
+            let visibleCount  = 5;
+            const itemsPerLoad = 5; // 2 hàng (5 sản phẩm/hàng)
+            expandButtons.forEach(button => {
+                button.addEventListener(
+                    "click", () => {
+                        const nextVisibleCount = visibleCount + itemsPerLoad;
+                        const dataTotal = parseInt(button.getAttribute("data-total"))
+                            
+                        const products = button.closest('.list-product')
+                        const productsItems = products.querySelectorAll(".product-item")
+                        productsItems.forEach((item, index) => {
+                            if (index >= visibleCount && index < nextVisibleCount) {
+                                item.classList.remove('hidden');
+                            }
+                        });
+
+                        if (dataTotal <= nextVisibleCount){
+                            const div = button.closest("div")
+                            
+                            button.classList.add("hidden")
+                            // Hiển thị nút "Thu gọn"
+                            const buttonCollapse = div.querySelector(".collapseButton")
+                            console.log(buttonCollapse)
+                            buttonCollapse.classList.remove("hidden")
+                        }
+                    visibleCount = nextVisibleCount;
+                    }
+                )
+            })
+
+            collapseButtons.forEach(button => {
+                button.addEventListener("click" ,() => {
+                    const products = button.closest('.list-product')
+                    console.log(products)
+                    const productsItems = products.querySelectorAll(".product-item")
+                    console.log(productsItems)
+
+                    productsItems.forEach((item, index) => {
+                        if (index >= 5) {
+                            item.classList.add('hidden');
+                        }
+                    });
+                    visibleCount = 5;
+                    button.classList.add("hidden")
+                    const dataTotal = parseInt(button.getAttribute("data-total"))
+                    if(dataTotal >= 5 ){
+                        const div = button.closest("div")
+                        const buttonExpand = div.querySelector(".expandButton")
+                        buttonExpand.classList.remove("hidden")
+                    }
+                })
+            })
+
+            
+
+        })
+
+
+
+            

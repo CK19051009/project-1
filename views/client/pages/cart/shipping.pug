@@ -1,0 +1,49 @@
+extends ../../layouts/order.pug
+include ../../mixins/mixin.pug
+block main 
+    main(class="container relative mx-auto mt-[20px]")
+        div(class="absolute right-0 top-[-10px]")
+            +alertSucess(2000)
+        div(class="text-[16px] font-[500] pb-[16px] text-[#38383d]") 2. #{title}
+        div(class="text-[14px] font-[500] pb-[16px]") Chọn địa chỉ giao hàng có sẵn bên dưới:
+
+        div(class="p-[16px] w-[50%] rounded-[8px] bg-[#ffffff] border-[2px] border-dashed border-[#009900]")  
+
+
+        div(class="my-[10px]")
+            span(class="font-[500] text-[14px] text-[#38383d]") Bạn có muốn giao hàng đến địa chỉ khác?  
+            a(class="font-[400] text-[14px] text-[#007ff0]" href="") Thêm địa chỉ giao hàng mới  
+        div(class="py-[16px] bg-[#f7f7f7] rounded-[4px] flex justify-center items-center border-[1px] border-solid border-[#dddddd] ")
+            form(action="/cart/checkout/shipping" , class="w-[40%]" method = "POST")
+                div(class="flex mb-[16px]")
+                    div(class="text-[13px] font-[700] text-[#38383d] w-[30%] ") Họ Tên:
+                    input(class="flex-1 outline-none py-[6px] px-[12px] rounded-[4px] border-[1px] border-solid border-[#cccccc]" required name="fullName" )
+                div(class="flex  mb-[16px]")
+                    div(class="text-[13px] font-[700] text-[#38383d] w-[30%] ") Điện thoại di động:
+                    input(class="flex-1 outline-none py-[6px] px-[12px] rounded-[4px] border-[1px] border-solid border-[#cccccc]" required name="phone" )
+                div(class="flex  mb-[16px]")
+                    div(class="text-[13px] font-[700] text-[#38383d] w-[30%] ") Địa chỉ:
+                    textarea(row = "4" class="flex-1 outline-none py-[6px] px-[12px] rounded-[4px] border-[1px] border-solid border-[#cccccc]" required name="address" )
+                div(class="text-[12px] font-[400] text-[#333333] mb-[12px] text-right") Để nhận hàng thuận lợi hơn , bạn vui lòng nhập loại địa chỉ 
+
+                div(class="flex  mb-[16px]")
+                    div(class="text-[13px] font-[700] text-[#38383d] w-[30%] ") Loại địa chỉ:
+                    div(class="flex items-center")
+                        div(class="flex items-center mr-[30px]")
+                            input(type="radio", class="size-[24px] " name="addressType" id ="addressType-1" required value ="1") 
+                            label(class="ml-[10px] " class="text-[13px] font-[500] text-[#38383d]" for="addressType-1") Nhà riêng / Chung cư
+                        div(class="flex items-center ")
+                            input(type="radio", class="size-[24px] " name="addressType" id ="addressType-2") 
+                            label(class="ml-[10px] " class="text-[13px] font-[500] text-[#38383d]" for="addressType-2" required value = "2") Cơ quan / Công ty
+
+                div(class="flex mb-[16px]")
+                    div(class="w-[30%]") 
+                    div(class="flex-1 flex items-center")
+                        input(type="checkbox", class=" size-[24px]" value="default" name="status" id="status")
+                        label(class="ml-[10px] " class="text-[14px] font-[500] text-[#38383d]" for="status") Sử dụng địa chỉ làm mặc định
+                div(class="flex mb-[16px]")
+                    div(class="w-[30%]")
+                    div(class="flex-1 flex items-center")
+                        button(type = "button" class=" flex-1 text-center rounded-[4px] text-[15px] font-[500] py-[10px] bg-[#c8c8f3] mr-[10px]" ) Hủy bỏ
+                        button(class=" flex-1 text-center rounded-[4px] text-[15px] text-white font-[500] py-[10px] bg-[#00b6f0]") Cập nhập
+                        //- a(href="" class=" flex-1 text-center rounded-[4px] text-[15px] text-white font-[500] py-[10px] bg-[#00b6f0]") Giao đến địa chỉ này

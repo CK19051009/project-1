@@ -1,0 +1,80 @@
+doctype html
+html(lang="en" class="h-full")
+    head()
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css")
+        link(rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css")
+        link(rel="stylesheet", href="/client/assets/css/style.css")
+        script(src="https://cdn.tailwindcss.com")
+        script(src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js")
+        script(src="https://cdn.jsdelivr.net/npm/sweetalert2@11")
+        
+        title #{pageTitle}
+    body(class="flex flex-col h-full bg-[#f5f5fa]  relative") 
+
+        div(class="z-10")
+            include ../partials/header.pug
+        if breadCrumb && breadCrumb.length > 0 && currentPath !== '/'
+            div(class="container mx-auto ")
+                include ../partials/breadcrumb.pug
+        div(class=("flex container mx-auto  " + (currentPath === '/' ? 'pt-[20px]' : '')))
+            div(class="sticky top-[10px] h-[calc(100vh-100px)] mr-[12px] overflow-y-auto")
+                block category
+                
+            //- ở trang home, trang danh mục 
+
+            div(class="flex flex-col flex-1")
+                main(class="flex-1  ")
+                    block main 
+
+
+                div(class="")
+                    include ../partials/footer.pug
+    
+        include ../partials/widgetChat.pug
+
+        div(class="loginOverlay" class="fixed hidden inset-0 flex items-center justify-center bg-black bg-opacity-50 z-[1000]")
+            div(class="lg:w-[50%] w-[100%] h-[auto] bg-[#ffffff] rounded-[12px] relative flex ")
+                div(class="flex-1 py-[16px] px-[45px]")
+                    button(
+                        button-close-overlay
+                        class="absolute right-[-18px] bg-[#ffffff] font-[400] rounded-[50%] text-[#808089] p-[10px] top-[-18px]  ") 
+                        i(class="fa-solid fa-xmark text-[24px] ")
+                       
+                    div(class="")
+                        span(class="lg:text-[24px] lg:font-[600] md:text-[20px] text-[18px] font-[500] text-[#27272a] mb-[10px]") Xin chào,
+                        br
+                        span(class="md:text-[16px] md:font-[500] text-[14px] font-[400]  text-[#27272a]") Đăng nhập hoặc Tạo tài khoản
+                        p(class="mt-[6px] md:text-[14px] text-[12px] font-[400]  text-[#27272a]") Để sử dụng dịch vụ của chúng tôi xin vui lòng đăng nhập
+                    div(class="mt-[40px]")
+                        a(
+                            href="/auth/login"
+                            class="w-full py-[13px] flex items-center justify-center rounded-[12px] text-white lg:font-[500] font-[400] md:text-[18px] text-[16px] lg:text-[20px] bg-[#ff424e] mb-[10px]")
+                            span(class="") Đăng nhập
+                        a(
+                            href="/auth/register"
+                            class="w-full flex items-center justify-center py-[13px] rounded-[12px] text-white lg:font-[500] font-[400] md:text-[18px] text-[16px] lg:text-[20px] bg-[#ff424e]") Tạo tài khoản
+                        p(class="mt-[10px] font-[500] text-[#0d5cb6] text-center") Đăng nhập bằng email
+                    div(class="mt-[50px]")
+                        p(class=" text-center px-[20px] text-[#787878] lg:font-[500] font-[400] md:text-[18px] text-[16px] lg:text-[20px]") Hoặc tiếp tục bằng 
+                        div(class="flex items-center justify-center mt-[20px]")
+                            a(href="" class="mr-[10px]")
+                                img(src="https://salt.tikicdn.com/ts/upload/3a/22/45/0f04dc6e4ed55fa62dcb305fd337db6c.png", class="md:size-[58px] size-[40px]" alt="", srcset="") 
+                            a(href="")
+                                img(src="https://salt.tikicdn.com/ts/upload/1c/ac/e8/141c68302262747f5988df2aae7eb161.png", class="md:size-[58px] size-[40px]" alt="", srcset="") 
+                    div(class="mt-[20px]") 
+                        p(class="md:text-[12px] text-[10px] text-[#787878]") Bằng việc tiếp tục, bạn đã đọc và đồng ý với 
+                            u điều khoản sử dụng và 
+                            u Chính sách bảo mật thông tin cá nhân
+                            |  của Tiki
+                div(class="w-[40%]  bg-[#deebff] flex flex-col items-center justify-center")
+                    img(src="https://salt.tikicdn.com/ts/upload/df/48/21/b4d225f471fe06887284e1341751b36e.png", class="size-[200px]" alt="")
+                    span(class=" lg:text-[18px] text-[16px]  lg:font-[600] font-[500]  text-[#0a68ff]") Mua sắm tại Tiki
+                    span(class=" lg:text-[16px] text-[14px]  lg:font-[500] font-[400] text-[#0a68ff]") Siêu ưu đãi
+        script(src="/socket.io/socket.io.js")
+        script(src="/client/assets/js/socket.io.js")  
+        script(type ="module" src="/client/assets/js/chat.js")  
+        script(src="/client/assets/js/script.js") 
+        script(src="/client/assets/js/cart.js") 
+        script(src="/client/assets/js/swiper.product.js") 

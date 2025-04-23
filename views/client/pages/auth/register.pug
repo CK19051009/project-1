@@ -1,0 +1,22 @@
+extends ../../layouts/auth.pug
+include ../../mixins/mixin.pug
+block main 
+    div(class="w-full h-full flex items-center justify-center fixed")
+        div(class="insert-0 fixed z-[1000] ")
+            div(class="")
+                div(class="md:text-[40px] text-[34px] font-[800] md:font-[800] text-[#363636] text-center mb-[20px]") ĐĂNG KÝ TÀI KHOẢN 
+                form(action="/auth/register",class="md:w-[500px] sm:w-[300px] w-[280px]" method="POST")
+                    div(class="")
+                        label(for="email" class="md:text-[18px] text-[16px] font-[500] text-[#363636]") Email:
+                        br
+                        input(type="email" id="email" required name= "email" class="w-full h-[50px]  border-[2px] border-[#131111] pl-[10px] outline-none rounded-[10px] mt-[10px]" )
+                    div(class="mt-[20px]")
+                        label(for="password" class="md:text-[18px] text-[16px] font-[500] text-[#363636]") Mật khẩu:
+                        br
+                        input(type="password" id="password" required name="password" class="w-full h-[50px] border-[2px] pl-[10px] border-[#131111] outline-none rounded-[10px] mt-[10px] ")
+                    div(class="mt-[20px]")
+                        label(for="password" class="md:text-[18px] text-[16px] font-[500] text-[#363636]") Xác nhận mật khẩu:
+                        br
+                        input(type="password" id="confirm_password" required name="confirmpassword" class="w-full h-[50px] border-[2px] pl-[10px] border-[#131111] outline-none rounded-[10px] mt-[10px] ")
+                    div(class="mt-[20px]")
+                        button(class="w-full h-[50px]  border-[2px] text-[18px] font-[500] text-[white] outline-none rounded-[10px] bg-[#2626e8]") Đăng Ký 

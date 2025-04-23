@@ -1,0 +1,88 @@
+extends ../../layouts/default.pug
+include ../../mixins/mixin.pug
+block main 
+
+    div(class="relative") 
+        div(class="absolute right-0 top-[-30px]")
+                +alertSucess(3000)
+                +alertError(3000)
+
+
+        div(class="")
+            +titleAdmin(pageTitle) 
+            if (role.permissions.includes("product-category_create"))
+                div(class="text-right  mr-[30px] ")
+                    a(href = `${urlAdmin}/product-category/create` class="  bg-[#ff424e]  lg:py-[10px] py-[6px] px-[5px] rounded-[10px] text-[14px] lg:text-[16px] font-[500] text-[white]  no-underline") Thêm mới+ 
+            
+            if (role.permissions.includes("product-category_view"))
+                div(class="flex items-center justify-start mt-[20px]")
+
+                    +buttonStatus(buttonStatus)
+
+                    div(class="ml-[70px]")
+                        form(class="bg-[#f2f1f1] flex rounded-[10px] pr-[10px]" form-search)
+                            input(type="text" name="keyword" value = keyword class="pl-[10px] py-[6px] lg:py-[10px] bg-transparent w-[160px] md:w-[200px] lg:w-[300px] outline-none" placeholder ="Tìm kiếm...")
+                            button(class="text-[#808089]" type="submit")
+                                i(class="fa-solid fa-magnifying-glass text-[20px]")
+
+            if (role.permissions.includes("product-category_edit"))
+                div(class="mt-[10px] flex md:flex-row flex-col")
+                    div(class="inline-block ")
+                        form(
+                            action =`${urlAdmin}/product-category/change-multi?_method=PATCH`
+                            class="bg-[#f2f1f1] rounded-[8px] w-[360px] md:w-[260px] lg:w-[360px] flex" form-change-multi
+                            method="POST"
+                            )
+                            select(name="action" class="outline-none bg-[#f2f1f1] w-[66%] text-[16px] font-[400]")
+                                option(value="") ------Chọn hoạt động ------
+                                option(value= "actives") --- Hoạt động
+                                option(value= "inactives") --- Dừng hoạt động
+                                option(value= "positions") --- Thay đổi thứ tự
+                                option(value= "deletes") --- Xóa tất cả 
+                            input(type="text" name="ids" class="hidden" )
+                            button(class="xl:px-[10px] w-[34%] px-[6px] py-[5px] bg-[blue] lg:text-[16px] text-[14px] xl:text-[18px] text-[white] font-[400] rounded-r-[8px]" type="") Áp dụng
+
+                    //- 
+                    div(class="md:ml-[30px] mt-[16px]")
+                        div(class="inline-block ")
+                            form(
+                                action =``
+                                class="bg-[#f2f1f1] rounded-[8px] w-[360px] md:w-[260px] lg:w-[360px] flex" 
+                                form-sort
+                                )
+                                select(name="sort" class="outline-none bg-[#f2f1f1] w-[66%] text-[16px] font-[400]")
+                                    option(value="" ) ------Chọn thứ tự sắp xếp  ------
+                                    option(value= "position-asc") --- Sắp xếp theo vị trí tăng dần
+                                    option(value= "position-desc") --- Sắp xếp theo vị trị giảm dần 
+                                    option(value= "title-asc") --- Sắp xếp theo tiêu đề từ A-Z
+                                    option(value= "title-desc") --- Sắp xếp theo tiêu đề từ Z-A
+                                    
+                                button(class="xl:px-[10px] w-[34%] px-[6px] py-[5px] bg-[#ff424e] lg:text-[16px] text-[14px] xl:text-[18px] text-[white] font-[400] rounded-r-[8px]" type="") Áp dụng
+            if (role.permissions.includes("product-category_view"))
+                if newCategorys.length > 0
+
+                    div(class="mt-[10px]")
+                        table(class="w-full table_role" table-change-multi) 
+                            thead(class="thead_role") 
+                                tr(class="")  
+                                    if (role.permissions.includes("product-category_edit"))
+                                        th(class="") 
+                                            input(type="checkbox", class="size-[20px]" name=" " input-checkboxAll)
+                                    th STT
+                                    //- th Hình ảnh
+                                    th(class="w-[200px]") Tiêu đề 
+                                    th(class="hidden text-center lg:table-cell") Vị trí 
+                                    th(class="hidden text-center lg:table-cell") Người tạo 
+                                    th(class="hidden text-center lg:table-cell") Người sửa gần nhất
+                                    th Trạng thái
+                                    if (role.permissions.includes("product-category_edit") || role.permissions.includes("product-category_delete"))
+                                        th Hoạt động
+                            tbody(class="tbody_role") 
+                                +tableTree(newCategorys)
+
+                                                                              
+
+                else 
+                    div(class="text-[20px] font-[600]") Chưa có danh mục nào , vui lòng tạo mới danh mục
+            else 
+                div(class="text-[20px] font-[500] mt-[30px]") Bạn không có quyền truy cập 

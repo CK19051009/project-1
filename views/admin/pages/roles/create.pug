@@ -1,0 +1,20 @@
+extends ../../layouts/default.pug
+include ../../mixins/mixin.pug
+block main 
+    div(class="relative")
+        div(class="absolute right-0 top-[-30px]")
+                +alertError(3000)
+    +titleAdmin("Thêm mới quyền")  
+    form(action=`${urlAdmin}/roles/create`, method="POST" ) 
+        div(class="mt-[50px]")
+            div(class="mb-[10px]")
+                label(for="title" class="lg:text-[18px] text-[16px] font-[500]") Tên quyền:
+            input(type="text" name="title" required  id="title"  class="bg-[#f2f1f1]   w-full rounded-[8px] outline-none h-[40px] pl-[14px]" placeholder="Nhập tên quyền ") 
+        div(class="mt-[20px]")
+            div(class="mb-[10px]")
+                label(for="description" class="lg:text-[18px] text-[16px] font-[500]") Mô tả :
+            textarea(name="description" rows = "10" class="tinyMCE w-full outline-none")
+
+        div(class="mt-[30px]")
+            button(class="bg-[#0a68ff] px-[10px] py-[5px] rounded-[10px] text-[16px] text-[white] font-[500]" type="submit") Tạo mới 
+            a(href=`${urlAdmin}/roles` class="ml-[15px] bg-[#c92424] text-[white] text-[16px] font-[500] py-[5px] px-[10px] rounded-[10px] ") Quay lại 

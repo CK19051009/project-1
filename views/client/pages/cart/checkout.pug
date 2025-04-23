@@ -1,0 +1,161 @@
+
+extends ../../layouts/order.pug
+include ../../mixins/mixin.pug
+    block main
+        
+        div(class="container mx-auto mt-[20px]")
+             
+            form(class="flex items-start xl:flex-row flex-col" form-order-success method="POST" action="/cart/checkout/order")
+                div(class="xl:w-[76%] w-[100%]")
+                    div(class="p-[16px]  rounded-[8px] bg-[#ffffff]")
+                        div(class="font-[500] lg:text-[18px] text-[16px] text-[#38383d] mb-[16px]") Chọn hình thức giao hàng 
+                        //- 
+                        div(class="bg-[#f0f8ff] rounded-[8px] px-[16px] py-[22px] w-[60%] border-solid border-[1px] border-[#C2E1FF]")
+                            div(class="flex items-center mb-[16px]")
+                                input(type="radio",class="size-[18px]" name="delivery")
+                                span(class="ml-[8px] md:text-[14px] text-[12px] font-[500] text-[#38383d]") Giao trong 2h
+                            div(class="flex items-center")
+                                input(type="radio",class="size-[18px]" name="delivery")
+                                span(class="ml-[8px] md:text-[14px] text-[12px] font-[500] text-[#38383d]") Giao tiết kiệm
+
+                        //- 
+                        div(class="" data-order-ids = cartCheckOut)
+                        input(type="text" class="hidden" name ="idsOrder")
+                        each item in cartCheckOut
+                            div(class="flex mt-[16px] p-[16px] rounded-[8px] md:flex-row flex-col   border-solid border-[1px] border-[#DDDDE3]")
+                                //- 
+                                div(class="md:w-[70%] mb-[20px] w-full  md:mr-[48px]")
+
+                                    //- thong tin san pham dat 
+                                    div(class="flex items-center")
+                                        div(class="md:block hidden")
+                                            img(src=item.thumbnail , class="size-[60px]" alt="")
+                                            
+                                        div(class=" ml-[20px] flex-1")
+                                            
+                                            span(class="md:text-[14px] text-[12px] line-clamp-2 text-[#808089] font-[500]") #{item.title}
+                                            div(class="w-[100%] flex flex-1 justify-between ")
+                                                div(class="md:text-[14px] text-[12px] text-[#808089] font-[500]") SL:x#{item.quantity}
+                                                div(class="")
+                                                    span(class="text-[16px] font-[500] text-[red]") #{item.newPrice.toLocaleString()}
+                                                    span(class="underline text-[red] lg:text-[14px] font-[500] text-[12px] ml-[2px]") đ
+
+                                    //- thong tin san pham dat 
+
+                                div(class="bg-[#f5f5fa]  rounded-[8px] flex items-start p-[8px] ")
+                                    div(class="mr-[10px]")
+                                        i(class="fa-solid fa-truck-droplet text-[#808089]")
+                                    div(class="text-[#808089] md:text-[14px] text-[12px] font-[400]")
+                                        | Được giao bởi TikiNOW Smart Logistics (giao từ Hà Nội)
+                    div(class="bg-[#ffffff] mt-[16px] rounded-[8px] p-[16px]")
+                            div(class="font-[500] md:text-[16px] lg:text-[18px] text-[14px] text-[#38383d] mb-[16px]") Chọn hình thức thanh toán
+                            div(class="mt-[20px]")
+                                div(class="flex items-center mb-[16px]")
+                                    input(type="radio",class="lg:size-[18px] size-[16px]" value="payCash" name="payment")
+                                    div(class="flex ml-[10px] items-center")
+                                        img(src="/client/assets/images/tien-mat.png", class="lg:size-[30px] size-[26px]" alt="", srcset="")
+                                        div(class="ml-[8px] text-[14px] font-[500] text-[#38383d]") Thanh toán tiền mặt
+
+                                div(class="flex items-center mb-[16px]")
+                                    input(type="radio",class="lg:size-[18px] size-[16px]" value="payMomo"  name="payment")
+                                    div(class="flex ml-[10px] items-center")
+                                        img(src="/client/assets/images/momo.jpg", class="lg:size-[30px] size-[26px]" alt="", srcset="")
+                                        div(class="ml-[8px] text-[14px] font-[500] text-[#38383d]") Ví momo 
+                                div(class="flex items-center mb-[16px]")
+                                    input(type="radio",class="lg:size-[18px] size-[16px]" value="payZalo" name="payment")
+                                    div(class="flex ml-[10px] items-center")
+                                        img(src="/client/assets/images/zalo-pay.png", class="lg:size-[30px] size-[26px]" alt="", srcset="")
+                                        span(class="ml-[8px] text-[14px] font-[500] text-[#38383d]") Ví ZaloPay
+                                div(class="flex items-center mb-[16px]")
+                                    input(type="radio",class="lg:size-[18px] size-[16px]" value="payViettelMoney" name="payment")
+                                    div(class="flex ml-[10px] items-center")
+                                        img(src="/client/assets/images/viettel-money.png", class="lg:size-[30px] size-[26px]" alt="", srcset="")
+                                        span(class="ml-[8px] text-[14px] font-[500] text-[#38383d]") Viettel Money 
+                            
+                            
+                //- het khoi san pham 
+                div(class=" xl:flex-1 w-full  xl:ml-[20px] xl:mt-[0px] mt-[20px] xl:block flex md:flex-row flex-col ")
+                    div(class="p-[16px] bg-[#ffffff] rounded-[8px] xl:w-full md:w-[60%] w-[100%]")
+                        div(class="flex items-center justify-between") 
+                            div(class="font-[400] lg:text-[18px] text-[16px]  text-[#808089]") Giao tới 
+
+                            //- a(href="/cart/checkout/shipping" class="text-[14px] text-[#0b74e5]") Thay đổi 
+                            
+                        div(class="")
+                            div(class="")
+                                lable(for="" class="text-[13px] font-[700] text-[#38383d]") Họ và tên:
+                                div(class="mb-[8px]")
+                                    input(type="text" required name="fullname" class="text-[13px] font-[400] outline-none pl-[10px] py-[6px] w-full border-[1px] border-solid rounded-[4px] border-[#cccccc]")
+                                
+                                //- 
+
+                                lable(for="phone" class="text-[13px] font-[700] text-[#38383d]") Điện thoại di động:
+                                div(class="mb-[8px]")
+                                    input(type="text" required name="phone" id="phone" class="text-[13px] font-[400] outline-none pl-[10px] py-[6px] w-full border-[1px] border-solid rounded-[4px] border-[#cccccc]")
+                                label(class="text-[13px] font-[700] text-[#38383d] ") Địa chỉ:
+                                div(class="")
+                                    textarea(row = "4" class="text-[13px] font-[400] flex-1 w-full outline-none py-[6px] px-[12px] rounded-[4px] border-[1px] border-solid border-[#cccccc]" required name="address" )
+                                //- span(class="pr-[10px] border-r-[1px] border-r-solid border-r-[#808089] text-[#38383d] text-[14px] font-[500]") Chấn Kiệt  
+                                //- span(class=" ml-[12px] text-[#38383d] text-[14px] font-[500]") 0852560567
+                            //- div(class="")
+
+                                //- span(class="px-[5px] py-[3px] rounded-[4px] text-[12px] text-[#00ab56] bg-[#effff4] font-[400]") Nhà 
+                                //- span(class="px-[5px] py-[3px] rounded-[4px] text-[12px] text-[#fc820a] bg-[#fff5eb] font-[400]") Văn phòng  
+                                //- span(class="text-[14px] font-[450] text-[#808089] ml-[2px]") an dong quynh phu thai binh 
+                    
+                    div(class="p-[16px] xl:mt-[16px] xl:ml-[0px] md:ml-[20px] mt-[16px] bg-[#ffffff] rounded-[8px] xl:w-full w-full md:w-[40%]")
+                        span(class="text-[16px] font-[500] text-[#38383d]") Đơn hàng 
+                        div(class="pb-[16px] border-b-[1px] border-b-solid border-b-[#EBEBF0]")
+                            span(class="text-[#808089] font-[400] ") #{cartCheckOut.length} Sản phẩm.
+                            button(class="text-[14px] font-[400] text-[#0b74e5]" type="button" button-flag-show="view") Xem thêm 
+                                i(class="fa-solid fa-chevron-down text-[10px]")
+                            button(class="text-[14px] font-[400] text-[#0b74e5] hidden " button-flag-show="hidden" type="button") Thu gọn 
+                                i(class="fa-solid fa-chevron-up text-[10px]")
+                        div(class="hidden" market-view)
+                            div(class="py-[10px] w-full  border-b-[1px] border-b-solid border-b-[#EBEBF0] ")
+                                each item  in cartCheckOut
+                                    div(class=" flex justify-between")
+                                        div(class="font-[500] text-[12px] text-[#38383d] w-[15%]") #{item.quantity} x 
+                                        div(class="font-[500] text-[12px] text-[#38383d] w-[55%] ") 
+                                            span #{item.title}
+                                        div(class="w-[30%] text-right")
+                                            span(class="text-[12px] font-[500] text-[#38383d] ") #{item.newPrice.toLocaleString()}
+                                            span(class="underline text-[#38383d] font-[500] text-[12px] ml-[2px]") đ
+
+                        div(class="py-[10px] border-b-[1px] border-b-solid border-b-[#EBEBF0]")
+                            div(class="flex items-center justify-between mb-[10px]") 
+                                span(class="text-[14px] text-[#808089] font-[600] ") Tổng tiền hàng :
+                                div(class="")
+                                    span(class="font-[500] text-[#27272a] text-[14px]") #{allPricePay.toLocaleString()}
+                                    span(class="underline text-[#38383d] font-[500] text-[12px] ml-[2px]") đ
+
+                            div(class="flex items-center justify-between mb-[10px]") 
+                                span(class="text-[14px] text-[#808089] font-[600] ") Phí vận chuyển :
+                                div(class="")
+                                    span(class="font-[500] text-[#27272a] text-[14px]") 25.000
+                                    span(class="underline text-[#38383d] font-[500] text-[12px] ml-[2px]") đ
+
+                            div(class="flex items-center justify-between mb-[10px]") 
+                                span(class="text-[14px] text-[#808089] font-[600] ") Giảm giá trực tiếp :
+                                div(class="text-[#00ab56]")
+                                    span(class="font-[500]  text-[14px]") -#{allPriceDiscount.toLocaleString()}
+                                    span(class="underline  font-[500] text-[12px] ml-[2px]") đ
+                            div(class=" items-center justify-between hidden") 
+                                span(class="text-[14px] text-[#808089] font-[600] ") Giảm giá vận chuyển :
+                                div(class="text-[#00ab56]")
+                                    span(class="font-[500]  text-[14px]") -90000
+                                    span(class="underline  font-[500] text-[12px] ml-[2px]") đ
+
+                        div(class="pt-[16px]")
+                            div(class="flex justify-between")
+                                span(class="text-[14px] font-[600] text-[#38383d]") Tổng tiền thanh toán
+                                div(class="text-right")
+                                    span(class="font-[600]  text-[18px]") #{(allPricePay + 25000).toLocaleString()}
+                                    span(class="underline  font-[500] text-[16px] ml-[2px]") đ
+                                    div(class="text-[#00ab56] text-right hidden")
+                                        span(class="font-[500]  text-[14px]") Tiết kiệm 9000
+                                        span(class="underline  font-[500] text-[12px] ml-[2px]") đ
+                            button(class="active-button mt-[16px]  rounded-[8px] w-[100%] py-[10px] font-[500] text-[18px] text-center "
+                                button-order
+                                type="submit"
+                                    )   Đặt hàng

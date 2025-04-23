@@ -1,0 +1,54 @@
+extends ../../layouts/default.pug
+include ../../mixins/mixin.pug
+block main 
+    
+        div(class="relative") 
+            div(class="absolute right-0 top-[-30px]")
+                +alertSucess(3000)
+                +alertError(3000)
+               
+                    
+            div(class="")
+                +titleAdmin(pageTitle)
+                div(class="text-right mt-[20px] mr-[30px] ")
+                    if (role.permissions.includes("role_edit"))
+                        a(href = `${urlAdmin}/roles/permissions` class="bg-[blue] lg:py-[10px] py-[6px] px-[5px] rounded-[10px] text-[14px] lg:text-[16px] font-[500] text-[white] hover:underline mr-[20px]" ) Phân quyền
+                    if (role.permissions.includes("role_create")) 
+                        a(href = `${urlAdmin}/roles/create` class="  bg-[#ff424e] lg:py-[10px] py-[6px] px-[5px] rounded-[10px] text-[14px] lg:text-[16px] font-[500] text-[white] ") Thêm mới+  
+
+            if (role.permissions.includes("role_view"))
+                if roles.length >=0   
+                    div(class="mt-[50px]")
+                        table(class="w-full table_role text-center") 
+                            thead(class="thead_role") 
+                                tr(class="lg:text-[16px] text-[14px]  ")  
+                                    th STT
+                                    th Tên quyền 
+                                    th  Mô tả 
+                                    if (role.permissions.includes("role_edit") || role.permissions.includes("role_delete") )
+                                        th(class="w-[20%]") Hoạt động
+                            tbody(class="tbody_role") 
+                                each item , index  in roles
+
+                                    tr(class="lg:text-[14px] text-[12px] text-center")
+                                        td #{index + 1}  
+                                    
+                                        td #{item.title}
+                                    
+                                        td(class="line-clamp-1") !{item.description}
+                                    
+                                        td
+                                            if (role.permissions.includes("role_edit"))
+
+                                                a(href=`${urlAdmin}/roles/edit/${item.id}` class="bg-[#3ec43e] rounded-[8px] text-[18px] text-[white] font-[500] px-[6px] py-[5px] mr-[10px] ") 
+                                                    i(class="fa-regular fa-pen-to-square size-[20px]")
+                                            if (role.permissions.includes("role_delete"))
+                                            
+                                                button(button-delete-role class="bg-[#e34d4d] rounded-[8px] text-[18px] font-[500]  text-[white] px-[6px] py-[5px]"  title = item.title) 
+                                                    i(class="fa-regular fa-trash-can  ")
+
+                                                    form(action=`${urlAdmin}/roles/delete/${item.id}`, form-delete-role method="get") 
+                else 
+                    div(class="mt-[100px]  text-center text-[25px] font-[600] text-[#577877] ") Chưa có quyền nào hãy thêm mới quyền 
+            else 
+                div(class="text-[20px] font-[500]") Bạn không có quyền truy cập 

@@ -1,0 +1,128 @@
+extends ../../layouts/default.pug
+
+mixin titleCustomer(title)
+    p(class="md:text-[16px] text-[14px] text-[#64646d] font-[400]") #{title}
+
+mixin labelLeft(title)
+    span(class="font-[400] text-[12px] lg:text-[14px] text-[#333333]")  #{title}
+mixin contentRight(content)
+    span(class="text-[12px] lg:text-[14px] text-[#38383d] ml-[6px] font-[400]") #{content}
+mixin buttonUpdate(text)
+    button(class="text-[#0b74e5] border-solid border-[1px] py-[2px] rounded-[4px] border-[#0b74e5] bg-transparent text-[12px] lg:text-[14px] font-[400] px-[12px]") #{text}
+block main 
+    div(class="flex items-start container mx-auto")
+        include ../../partials/menucustomer.pug
+                    
+        div(class="flex-1 flex flex-col")
+            form(action="/customer/profile?_method=PATCH" method="POST" ) 
+                div(class="text-[#000000] mt-[4px] mb-[12px] font-[400] text-[16px] lg:text-[20px]") #{pageTitle}
+                div(class="flex-1 flex bg-[#ffffff] rounded-[12px] p-[20px]")
+                    //- khối bên trái
+                    div(class="w-[50%] pr-[24px] border-r-[1px] border-solid border-[#e6e6e6]")
+                        div(class="mb-[12px]") 
+                            +titleCustomer("Thông tin cá nhân")
+                        div(class="flex items-start")
+                            div(class=" mr-[20px] size-[112px] flex bg-[#f0f8ff] items-center justify-center rounded-[50%] border-[4px] border-solid  border-[#C2E1FF] ")
+                                img(
+                                    class ="size-[50px]  rounded-[40px]"
+                                    src=(client.avatar ? client.avatar : "https://frontend.tikicdn.com/_desktop-next/static/img/account/avatar.png" ), alt="", srcset="")
+                            div(class="flex flex-col items-start flex-1  justify-center")
+                                div(class="mb-[34px] flex items-center justify-between   w-full" )
+                                    label(for="" class="font-[400] text-[12px] lg:text-[14px] flex-1 text-[#333333]") Họ & Tên 
+                                    input(
+                                        value=client.fullname
+                                        name ="fullname"
+                                        type="text" class="outline-none text-[13px] font-[400] w-[70%] py-[10px] px-[12px] border-[1px] border-solid border-[#e6e6e6] rounded-[4px]") 
+                                div(class="mb-[34px] flex items-center justify-between  w-full")
+                                    label(for="" class="font-[400] text-[12px] lg:text-[14px] text-[#333333]") Nickname
+                                    input(type="text"
+                                      name="nickname"
+                                      value = client.nickname
+                                      class="outline-none text-[13px] font-[400] w-[70%]  py-[10px] px-[12px] border-[1px] border-solid border-[#e6e6e6] rounded-[4px]") 
+
+                        div(class="mb-[34px] flex items-start justify-between")
+                            div(class="flex-1")
+                                +labelLeft("Ngày sinh")
+                            div(class="flex items-center justify-between w-[73%]")
+                                select(name="day" class="outline-none text-[13px] py-[6px] text-center px-[12px] font-[400] w-[30%] border-[1px] border-solid  rounded-[4px] border-[#e6e6e6]")
+                                    each day in Array.from({length: 31}, (_, i) => i + 1)
+                                        option(value=day selected=(day === client.birthday.day))= day 
+                                select(name="month" class="outline-none text-[13px] py-[6px] text-center px-[12px] font-[400] w-[30%] border-[1px] border-solid rounded-[4px] border-[#e6e6e6] ")
+                                    each month in Array.from({length: 12}, (_, i) => i + 1)
+                                        option(value=month selected=(month === client.birthday.month))= month
+                                select(
+                                    name="year"
+                                    class=" outline-none  text-[14px] font-[400] w-[30%] text-center py-[6px] px-[12px] border-solid border-[1px] border-[#e6e6e6] rounded-[4px]")
+                                    each year in Array.from({length: 30}, (_, i) => 2000 + i)
+                                        option(value=year selected=(year === client.birthday.year))= year
+                        div(class="mb-[34px] flex items-center justify-between")
+                            +labelLeft("Giới tính") 
+                            div(class="flex")
+                                div(class="flex items-center mr-[20px]")
+                            
+                                    input(type="radio" name ="gender" value="man" checked=(client.gender ==="man" ? true : false) class="size-[20px] text-[#0b74e5] ")
+                                    span(class="ml-[10px]") Nam
+                                div(class="flex items-center mr-[20px]")
+                            
+                                    input(type="radio" name="gender" value ="woman" checked=(client.gender ==="woman" ? true : false) class="size-[20px] text-[#0b74e5]")
+                                    span(class="ml-[10px]") Nữ
+                                div(class="flex items-center mr-[20px]")
+                            
+                                    input(type="radio" name = "gender" value="other" checked=(client.gender ==="other" ? true : false) class="size-[20px] text-[#0b74e5]")
+                                    span(class="ml-[10px]") Khác
+                        div(class="mb-[34px] flex items-start flex-1  justify-center")
+                            label(for="" class="font-[400] text-[14px] text-[#ffffff]") 
+                            button(
+                                type="submit"
+                                class="bg-[#0b74e5] text-[14px] rounded-[4px] py-[8px] px-[12px] text-white font-[400]") Lưu thay đổi
+                    
+
+                    
+
+                    //- khối bên phải
+                    div(class="w-[50%] pl-[24px]")
+                        div(class="mb-[12px]") 
+                            +titleCustomer("Số điện thoại và Email")
+                        div(class="py-[19px] flex items-center justify-between border-b-[1px] border-solid border-[#e6e6e6]")
+                            div(class="flex")
+                                img(src="https://frontend.tikicdn.com/_desktop-next/static/img/account/phone.png" class="size-[24px]", alt="")
+                                div(class="flex flex-col")
+                                    +contentRight("Số điện thoại")
+                                    if client.phone 
+                                        +contentRight(client.phone)
+                                    else 
+                                        +contentRight("Thêm số điện thoại")
+                            div(class="")
+                                +buttonUpdate("Cập nhật")
+                        
+
+                        div(class="py-[19px] flex items-center justify-between border-b-[1px] border-solid border-[#e6e6e6]")
+                            div(class="flex")
+                                img(src="https://frontend.tikicdn.com/_desktop-next/static/img/account/email.png" class="size-[24px]", alt="")
+                                div(class="flex flex-col")
+                                    +contentRight("Địa chỉ email")
+                                    if client.email 
+                                        +contentRight(client.email)
+                                    else 
+                                        +contentRight("Thêm địa chỉ email")
+
+                            div(class="")
+                                +buttonUpdate("Cập nhật")
+                        div(class="my-[12px]") 
+                            +titleCustomer("Liên kết mạng xã hội")
+                        div(class="py-[19px] flex items-center justify-between")
+                            div(class="flex items-center")
+                                img(src="https://frontend.tikicdn.com/_desktop-next/static/img/account/facebook.png" class="size-[24px]", alt="")
+                                div(class="flex flex-col")
+                                    +contentRight("Facebook")
+                                
+                            div(class="")
+                                +buttonUpdate("Liên kết")
+                        div(class="py-[19px] flex items-center justify-between")
+                            div(class="flex items-center")
+                                img(src="https://frontend.tikicdn.com/_desktop-next/static/img/account/google.png" class="size-[24px]", alt="")
+                                div(class="flex flex-col")
+                                    +contentRight("Google")
+                                
+                            div(class="")
+                                +buttonUpdate("Liên kết")

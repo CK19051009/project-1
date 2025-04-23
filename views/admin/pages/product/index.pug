@@ -1,0 +1,152 @@
+extends ../../layouts/default.pug
+include ../../mixins/mixin.pug
+block main 
+
+    div(class="relative") 
+        div(class="absolute right-0 top-[-30px]")
+                +alertSucess(3000)
+                +alertError(3000)
+
+
+        div(class="")
+            +titleAdmin(pageTitle)
+            div(class="text-right  mr-[30px] ")
+                a(href = `${urlAdmin}/products/create` class="  bg-[#ff424e]  py-[10px] px-[5px] rounded-[10px] text-[16px] font-[500] text-[white]") Thêm mới+ 
+            div(class="flex items-center justify-start")
+
+                +buttonStatus(buttonStatus)
+
+                div(class="ml-[70px]")
+                    form(class="bg-[#f2f1f1] rounded-[10px] pr-[10px] flex" form-search)
+                        input(type="text" name="keyword" value = keyword class="pl-[10px] py-[6px] lg:py-[10px] bg-transparent w-[160px] md:w-[200px] lg:w-[300px] outline-none" placeholder ="Tìm kiếm...")
+                        button(class="text-[#808089]" type="submit")
+                            i(class="fa-solid fa-magnifying-glass text-[20px]")
+
+            
+            div(class="mt-[10px] flex md:flex-row flex-col")
+                div(class="inline-block ")
+                    form(
+                        action =`${urlAdmin}/products/change-multi?_method=PATCH`
+                        class="bg-[#f2f1f1] rounded-[8px] w-[360px] md:w-[260px] lg:w-[360px] flex" form-change-multi
+                        method="POST"
+                        )
+                        select(name="action" class="outline-none bg-[#f2f1f1] w-[66%]  text-[16px] font-[400]")
+                            option(value="") ------Chọn hoạt động ------
+                            option(value= "actives") --- Hoạt động
+                            option(value= "inactives") --- Dừng hoạt động
+                            option(value= "positions") --- Thay đổi thứ tự
+                            option(value= "deletes") --- Xóa tất cả 
+                        input(type="text" name="ids" class="hidden" )
+                        button(class="xl:px-[10px] w-[34%] px-[6px] py-[5px] bg-[blue] lg:text-[16px] text-[14px] xl:text-[18px] text-[white] font-[400] rounded-r-[8px]" type="") Áp dụng
+
+                //- 
+                div(class="md:ml-[30px] mt-[16px]")
+                    div(class="inline-block ")
+                        form(
+                            action =``
+                            class="bg-[#f2f1f1] rounded-[8px] w-[360px] md:w-[260px] lg:w-[360px] flex" 
+                            form-sort
+                            )
+                            select(name="sort" class="outline-none bg-[#f2f1f1] w-[66%] text-[16px] font-[400]")
+                                option(value="" ) ------Chọn thứ tự sắp xếp  ------
+                                option(value= "position-asc") --- Sắp xếp theo vị trí tăng dần
+                                option(value= "position-desc") --- Sắp xếp theo vị trị giảm dần 
+                                option(value= "title-asc") --- Sắp xếp theo tiêu đề từ A-Z
+                                option(value= "title-desc") --- Sắp xếp theo tiêu đề từ Z-A
+                                option(value= "price-asc") --- Sắp xếp theo giá tăng dần 
+                                option(value= "price-desc") --- Sắp xếp theo giá giảm dần
+                                
+                            button(class="xl:px-[10px] w-[34%] px-[6px] py-[5px] bg-[#ff424e] lg:text-[16px] text-[14px] xl:text-[18px] text-[white] font-[400] rounded-r-[8px]" type="") Áp dụng
+            if (role.permissions.includes("product_view"))
+                if products.length > 0
+                    div(class="mt-[30px]")
+                        table(class="w-full table_role" table-change-multi) 
+                            thead(class="thead_role") 
+                                tr  
+                                    if (role.permissions.includes("product_edit"))
+                                        th(class="") 
+                                            input(type="checkbox", class="size-[20px]" name=" " input-checkboxAll)
+                                    th STT
+                                    th(class="hidden text-center lg:table-cell") Hình ảnh
+                                    th(class="w-[80px]") Tiêu đề 
+                                    th Giá gốc(VND)
+                                    th Vị trí 
+                                    th Trạng thái
+                                    th(class="w-[130px] hidden text-center lg:table-cell") Người tạo
+                                    th(class="w-[100px] hidden text-center lg:table-cell") Người sửa gần nhất
+                                    if (role.permissions.includes("product_edit") || role.permissions.includes("product_delete"))
+                                        th Hoạt động
+                            tbody(class="tbody_role")
+                                each item , index in products
+                                    tr(class="text-center") 
+                                        if (role.permissions.includes("product_edit"))
+                                                td 
+                                                    input(type="checkbox" class="size-[20px]" value = item.id inputcheckbox)
+                                        td #{index + 1}
+                                        td(class="  justify-center items-center hidden text-center lg:table-cell") 
+                                                if item.thumbnail
+                                                    img(src=item.thumbnail, class=" h-[100px] w-[100px] object-cover " alt="")
+                                                else 
+                                                    span(class="text-center") Chưa có ảnh 
+                                        td(class="text-center") 
+                                                p(class="line-clamp-2 text-start")  #{item.title}
+                                        td 
+                                            span(class="text-[red]") #{item.price.toLocaleString()}
+                                                sup(class="underline") đ
+                                        td 
+                                                if (role.permissions.includes("product_edit"))
+                                                    input(type="number" min="1" input-position class="w-[50px] outline-none rounded-[5px] pl-[6px]" value = item.position)
+                                                else 
+                                                    span(class="") #{item.position}
+                                        td 
+                                                if (role.permissions.includes("product_edit"))
+                                                    if(item.status == "active")
+                                                            button(class="bg-[#98f398] text-[16px] text-center px-[5px] py-[3px] font-[500] rounded-[8px] text-[white]" button-status = item.status button-id = item.id) Hoạt động
+                                                
+
+                                                    if(item.status == "inactive")
+                                                            button(class="bg-[#fd6666] text-[16px] text-center px-[5px] py-[3px] font-[500] rounded-[8px] text-[white]" button-status = item.status button-id = item.id) Dừng hoạt động
+                                                else 
+                                                    if(item.status == "active")
+                                                            span(class="bg-[#98f398] text-[16px] text-center px-[5px] py-[3px] font-[500] rounded-[8px] text-[white]" ) Hoạt động
+                                                
+
+                                                    if(item.status == "inactive")
+                                                            span(class="bg-[#fd6666] text-[16px] text-center px-[5px] py-[3px] font-[500] rounded-[8px] text-[white]" ) Dừng hoạt động
+                                        td(class="hidden text-center lg:table-cell") 
+                                            if item.createdBy.account_id 
+                                                span #{item.createdBy.fullName}
+                                                br    
+                                                span #{moment(item.createdBy.createAt).format('MMMM Do YYYY, HH:mm:ss a')}  
+                                        td(class="hidden text-center lg:table-cell")
+                                            if item.editBy.length > 0
+    
+                                                span #{item.editBy[item.editBy.length - 1].fullName}
+                                                br    
+                                                span #{moment(item.editBy[item.editBy.length - 1].editAt).format('MMMM Do YYYY, HH:mm:ss a')}      
+                                        td 
+                                                if (role.permissions.includes("product_edit"))
+                                                    a(href=`${urlAdmin}/products/edit/${item.id}` class="bg-[#3ec43e] rounded-[8px] text-[18px] text-[white] font-[500] px-[6px] py-[5px] mr-[10px] ") 
+                                                            i(class="fa-regular fa-pen-to-square size-[20px]")
+                                                if (role.permissions.includes("product_delete"))
+                                                    button(button-delete-role class="bg-[#e34d4d] rounded-[8px] text-[18px] font-[500]  text-[white] px-[6px] py-[5px]"  title=`sản phẩm ${item.title}`  ) 
+                                                            i(class="fa-regular fa-trash-can  ")
+
+                                                            form(action=`${urlAdmin}/products/delete/${item.id}`, class="hidden" form-delete-role method="GET")
+                    
+
+
+                    form(action="", method="GET"
+                            path-status = `${urlAdmin}/products/change-status`
+                    )
+
+                    div(class="mt-[40px]")
+                       +pagination(pagination)
+
+                else 
+                    div(class="text-[20px] mt-[40px] font-[600]") Chưa có Sản phẩm này  nào , vui lòng tạo mới sản phẩm 
+            else 
+                div(class="text-[20px] font-[500] mt-[30px]") Bạn không có quyền truy cập 
+
+
+                                

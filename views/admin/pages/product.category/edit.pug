@@ -1,0 +1,77 @@
+extends ../../layouts/default.pug
+include ../../mixins/mixin.pug
+block main 
+
+    div(class="relative")
+        div(class="absolute right-0 top-[-30px]")
+                +alertError(3000)
+    +titleAdmin(pageTitle) 
+    //- 
+    form(action=`${urlAdmin}/product-category/edit/${categoryProduct.id}?_method=PATCH`, method="POST" enctype="multipart/form-data") 
+        //- 
+        div(class="mt-[50px]")
+            div(class="mb-[10px]")
+                label(for="title" class="text-[18px] font-[500]") Tên danh mục : 
+            input(type="text" name="title" value =categoryProduct.title required  id="title"  class="bg-[#f2f1f1] w-full rounded-[8px] outline-none h-[40px] pl-[14px]" placeholder="Nhập danh mục") 
+        //- 
+        div(class="mt-[20px] flex")
+            //- 
+            div(class="")
+                div(class="mb-[10px]")
+                    label(for="parent_id" class="text-[18px] font-[500]") Danh mục cha :
+                select(name="parent_id"  id ="parent_id" class="bg-[#f2f1f1] outline-none rounded-[10px]")
+                    option(class="" value="") --------Chọn danh mục cha---------
+
+                    if (newCategorys)
+                       +select-option(newCategorys , 1 , parent_id = categoryProduct.parent_id )
+
+
+            //- 
+            div(class="ml-[40px]")
+                div(class="flex items-center")
+                    label(for="feature" class="lg:text-[18px] text-[16px] font-[500] ")   Danh mục nổi bật:
+                    div(class="flex justify-start items-center mt-[10px] ")
+                            div(class="flex justify-start items-center")
+                                input(type="radio" name="feature" checked = (categoryProduct.feature == "1" ? true : false) value="1" class="size-[20px]") 
+                                span(class="ml-[5px] text-[18px]") Nổi bật
+                            div(class="ml-[20px] flex justify-start items-center")
+                                input(type="radio" name="feature" value="0" checked = (categoryProduct.feature == "0" ? true : false) class="size-[20px]")
+                                span(class="ml-[5px] text-[18px]") Không nổi bật
+                    div(class="ml-[40px] xl:hidden flex")
+                        label(for="position" class="lg:text-[18px] text-[16px] font-[500] ")   Vị trí:
+                        div(class="mt-[10px]")
+                            input(type="number" name="position" value = categoryProduct.position class="bg-[#f2f1f1] w-[50px] rounded-[5px] outline-none pl-[8px]")
+
+            //- 
+            div(class="xl:ml-[40px] xl:block hidden")
+                label(for="position" class="lg:text-[18px] text-[16px] font-[500] ")   Vị trí:
+                div(class="mt-[10px]")
+                    input(type="number" name="position" value = categoryProduct.position class="bg-[#f2f1f1] w-[50px] rounded-[5px] outline-none pl-[8px]")
+
+                
+             
+        //- 
+        div(class="mt-[20px]")
+            div(class="mb-[10px]")
+                label(for="description" class="lg:text-[18px] text-[16px] font-[500]") Mô tả :
+            textarea(name="description" class="tinyMCE") !{categoryProduct.description}
+        //- 
+        div(class="mt-[20px]")
+            div(class="mb-[10px]")
+                label(for="thumbnail" class="lg:text-[18px] text-[16px] font-[500]") Ảnh: 
+            input(type="file" accept="image/*" id ="thumbnail" name="thumbnail" class="input_upload" )
+            div(class="mt-[10px] relative")
+                button(class="size-[25px] left-[180px] hidden absolute    rounded-[10px] hover:bg-[#c92424] mb-[10px]" close-image type="button") 
+                    i(class="fa-solid fa-xmark px-[5px] py-[3px] text-center hover:text-[white] ")
+                img(src=categoryProduct.thumbnail , alt="", class="image_upload  w-[200px] object-cover rounded-[8px] ") 
+       
+        div(class="mt-[30px] flex justify-start items-center ")
+                    div(class="flex justify-start items-center")
+                        input(type="radio" name="status" value="active" checked = (categoryProduct.status == "active" ? true : false) class="size-[20px]") 
+                        span(class="ml-[5px] text-[18px]") Hoạt động
+                    div(class="ml-[20px] flex justify-start items-center")
+                        input(type="radio" name="status" value="inactive" checked = (categoryProduct.status == "inactive" ? true : false) class="size-[20px]")
+                        span(class="ml-[5px] text-[18px]") Dừng hoạt động
+        div(class="mt-[30px]")
+            button(class="bg-[#0a68ff] px-[10px] py-[5px] rounded-[10px] text-[16px] text-[white] font-[500]" type="submit")  Chỉnh sửa 
+            a(href=`${urlAdmin}/product-category` class="ml-[15px] bg-[#c92424] text-[white] text-[16px] font-[500] py-[5px] px-[10px] rounded-[10px] ") Quay lại

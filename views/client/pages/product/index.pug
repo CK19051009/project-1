@@ -1,0 +1,119 @@
+extends ../../layouts/default.pug
+include ../../mixins/mixin.pug
+block main 
+    main(class="flex justify-between items-start relative ")
+        div(class="xl:w-[400px] w-[300px] mr-[26px] bg-[#ffffff] group  rounded-[8px] p-[16px] md:sticky top-[10px]")
+            div(class="")
+                div(class="swiper mySwiper2")
+                    div(class="swiper-wrapper")
+                        each image in product.productImages
+                            div(class="swiper-slide") 
+                                img(src=image, class= " w-full xl:h-[400px] h-[300px] rounded-[8px]"  alt="")
+                    div(class="swiper-button-next bg-[#1d97bc66] hidden group-hover:flex  rounded-[20px] size-[42px]   text-[#ffffff]")
+                    div(class="swiper-button-prev bg-[#1d97bc66] hidden group-hover:flex   rounded-[20px] size-[42px]   text-[#ffffff]")
+            div(class="swiper mySwiper h-[60px] w-full mt-[10px]")
+                div(class="swiper-wrapper")
+                    each image in product.productImages
+                            div(class="swiper-slide p-[4px] rounded-[4px] border-[1px] border-solid border-[#EBEBF0]") 
+                                img(src=image, class=" h-full w-full rounded-[4px]"  alt="")
+        //- end image
+
+        //- information
+        div(class="flex-1 mr-[26px] ")
+            div(class='p-[16px] rounded-[8px] bg-[#ffffff]')
+                div(class="flex items-center flex-wrap")
+                    img(src="https://salt.tikicdn.com/ts/upload/94/36/e7/c5297f3fad0a83fb56f98be877904467.png" class="w-[76px] mr-[10px]" alt="")
+                    img(src="https://salt.tikicdn.com/ts/ta/b1/3f/4e/cc3d0a2dd751a7b06dd97d868d6afa56.png" class="w-[114px] mr-[10px]" alt="")
+                    img(src="https://salt.tikicdn.com/ts/upload/d7/56/04/b93b8c666e13f49971483596ef14800f.png" class="w-[89px]" alt="")
+                div(class="mt-[6px]")
+                    span(class="lg:font-[500] md:text-[16px] md:font-[400] text-[14px] font-[300] lg:text-[20px] text-[#27272a]") #{product.title} 
+                div(class="mt-[6px] flex items-center justify-start")
+                    span(class="md:font-[500] text-[12px] font-[400] md:text-[14px] text-[#27272a] mr-[4px]") 5
+                    div(class="flex items-center")
+                        i(class="fa-solid fa-star lg:size-[16px] md:size-[14px] size-[12px] text-[yellow] mr-[2px] lg:mr-[4px]")
+                        i(class="fa-solid fa-star lg:size-[16px] md:size-[14px] size-[12px] text-[yellow] mr-[2px] lg:mr-[4px]")
+                        i(class="fa-solid fa-star lg:size-[16px] md:size-[14px] size-[12px] text-[yellow] mr-[2px] lg:mr-[4px]")
+                        i(class="fa-solid fa-star lg:size-[16px] md:size-[14px] size-[12px] text-[yellow] mr-[2px] lg:mr-[4px]")
+                        i(class="fa-solid fa-star lg:size-[16px] md:size-[14px] size-[12px] text-[yellow] mr-[2px] lg:mr-[4px]")
+                    span(class=" ml-[5px] mr-[10px] font-[400] lg:text-[14px] md:text-[12px] text-[10px] text-[#787878] pr-[8px] border-r-[1px] border-r-solid border-r-[#c7c7c7]") (928)
+                    span(class="font-[400] lg:text-[14px] md:text-[12px] text-[10px] text-[#787878]") Đã bán 5000+
+                div(class="mt-[6px]")
+                    span(class="font-[500]  lg:text-[24px] text-[14px] text-[red]")  #{product.newPrice.toLocaleString()}
+                    sup(class="underline text-[red] lg:text-[14px] font-[600] text-[12px] ") đ
+                    if product.discountPersent > 0
+                        span(class="ml-[12px] px-[5px] py-[4px] text-[#27272a] lg:text-[14px] text-[12px] font-[500]  rounded-[8px] bg-[#f5f5fa] mr-[5px]") -26%
+            div(class='mt-[20px] p-[16px] rounded-[8px] bg-[#ffffff]')
+                div(class="md:font-[500] font-[400] lg:text-[20px] md:text-[18px] sm:text-[16px] text-[14px]") Mô tả sản phẩm 
+
+                div(class="my-[20px]")
+                    img(src=product.thumbnail, alt="", class="w-[100%] rounded-[8px] xl:h-[540px] lg:h-[460px] md:h-[380px] h-[300px] " srcset="")
+                div(class="relative") 
+                    div(   id="productDescription" 
+                            class="overflow-hidden transition-all duration-300"
+                            style="max-height: 260px") !{product.description}
+                    div(class="flex items-center justify-center hidden"   id="toggleButtonWrapper")
+                        button( id="expandButton" class="text-[#189eff] font-[400] mt-[10px]") Xem thêm
+                        button( id="collapseButton" class="text-[#189eff] font-[400] mt-[10px] hidden") Thu gọn
+
+
+
+
+        //- end information
+
+        div(class="lg:w-[20%] w-[30%] p-[12px] bg-[#ffffff] lg:sticky top-[10px] rounded-[8px] ")
+            div(class="") 
+                form(action="", method="POST" form-order) 
+                    div(class="mb-[10px]")
+                        span(class="lg:font-[600] text-[14px] text-[#000000]") Số Lượng
+                    div(class="border-[1px]  border-solid border-[#a6a6b0] rounded-[4px] flex  w-[66%] lg:w-[48%] ")
+                        button(type="button" class="border-r-[1px] border-r-solid border-r-[#a6a6b0] px-[10px] text-center font-[500] text-[20px]" button-prev-quantity="-") - 
+                        input(type="number" name="quantity"   input-order min = 1 value = 1 class=' outline-none  w-[40px] h-[auto] text-center')
+                        button(type="button" class="border-l-[1px] border-l-solid border-l-[#a6a6b0] px-[10px] text-center font-[500] text-[20px]" button-prev-quantity="+") +
+                    input(type="text" class="hidden" name="ids" value=`${product.id}, buynow`)
+            
+            div(class="mt-[16px]")
+                div(class="mb-[10px]")
+                    span(class="lg:font-[600] md:font-[500] font-[400] text-[14px] lg:text-[16px] text-[#000000]") Tạm tính
+                    div(class="")
+                        span(class="font-[500]  lg:text-[24px] text-[14px] text-[red]" priceProduct = product.newPrice)  #{product.newPrice.toLocaleString()}
+                        sup(class="underline text-[red] lg:text-[14px] font-[600] text-[12px] ") đ
+            div(class="mt-[16px]")
+                button(class="active-button mb-[10px]  rounded-[8px] w-[100%] py-[10px] font-[400] text-[12px] lg:text-[16px] text-center text-[#0a68ff] border-[2px] boder-solid border-[#0a68ff] last:mb-0"
+                        flag-button = "buynow"
+                        path-order  = "/cart/checkout"
+                )   Mua ngay
+                button(
+                    flag-button = "addProduct"
+                    path-order = `/cart/add/${product.id}`
+                    class="rounded-[8px] mb-[10px] w-[100%] text-[12px] lg:text-[16px]  py-[10px] font-[400]  text-center text-[#0a68ff] border-[2px] boder-solid border-[#0a68ff]")    Thêm vào giỏ 
+                button(
+                    path-order = "/text2"
+                    class="rounded-[8px] w-[100%] py-[10px] font-[400] text-[12px] lg:text-[16px]  text-center text-[#0a68ff] border-[2px] boder-solid border-[#0a68ff]")    Mua trước trả sau
+    //- div(class="")
+    //-         h1 danh gia san pham
+
+    script.
+        document.addEventListener('DOMContentLoaded', function() {
+            const description = document.getElementById('productDescription');
+            const wrapper = document.getElementById('toggleButtonWrapper');
+            const expandBtn = document.getElementById('expandButton');
+            const collapseBtn = document.getElementById('collapseButton');
+
+            // Chỉ hiển thị nút nếu nội dung dài
+            if (description.scrollHeight > description.clientHeight) {
+                wrapper.classList.remove('hidden');
+            
+                expandBtn.addEventListener('click', function() {
+                    description.style.maxHeight = description.scrollHeight + 'px';
+                    expandBtn.classList.add('hidden');
+                    collapseBtn.classList.remove('hidden');
+                });
+                
+                collapseBtn.addEventListener('click', function() {
+                    description.style.maxHeight = '100px';
+                    collapseBtn.classList.add('hidden');
+                    expandBtn.classList.remove('hidden');
+                });
+            }
+        });
+    script(src="/client/assets/js/swiper.product.js")

@@ -1,0 +1,146 @@
+extends ../../layouts/default.pug
+include ../../mixins/mixin.pug
+block main 
+        if (role.permissions.includes("role_edit"))
+            div(class="relative") 
+                div(class="absolute right-0 top-[-30px]")
+                    +alertSucess(3000)
+                    +alertError(3000)
+                div(class="")
+                    div(class="flex justify-between")
+                        +titleAdmin(pageTitle) 
+                        div(class="mr-[10px]")
+                            a(href=`${urlAdmin}/roles` class="hover:text-[#577877] ") 
+                                
+                                i(class="fa-solid fa-chevron-right text-[30px]")
+                    if (role.permissions.includes("role_edit"))
+                        div(class="text-right mt-[20px] mr-[30px] ") 
+                            button( button-permissions class="  bg-[#25D162] py-[10px] px-[5px] rounded-[10px] text-[16px] font-[500] text-[white] hover:underline hover:text-[blue]") Cập nhập  
+
+                    div(data-permissions = roles)
+                    div(class="mt-[50px]")
+                        table(class="w-full table_role") 
+                            thead(class="thead_role") 
+                                tr 
+                                    th  Quyền
+                                    each role in roles 
+                                        th #{role.title}
+
+                            tbody(class="tbody_role" tbody-permissions) 
+                                tr(class="hidden" data-name="id") 
+                                    td 
+                                    each role in roles 
+                                        td(class="text-center") 
+                                            input(type="text" value=role.id)
+                                //- 
+                                tr 
+                                    td 
+                                        b   Quản lý tài khoản            
+                                tr(class="" data-name="account_view") 
+                                    td Xem
+                                    each role in roles 
+                                        td(class="text-center") 
+                                            input(type="checkbox", class="size-[25px]" name="" )
+
+                                tr(class="" data-name="account_create") 
+                                    td Tạo mới 
+                                    each role in roles 
+                                        td(class="text-center") 
+                                            input(type="checkbox", class="size-[25px]" name="" )
+                                tr(class="" data-name="account_edit") 
+                                    td Chỉnh sửa 
+                                    each role in roles 
+                                        td(class="text-center") 
+                                            input(type="checkbox", class="size-[25px]" name="" )
+                                tr(class="" data-name="account_delete") 
+                                    td(class="text-[red]") Xóa 
+                                    each role in roles 
+                                        td(class="text-center") 
+                                            input(type="checkbox", class="size-[25px]" name="" )
+
+                                //- 
+                                tr 
+                                    td 
+                                        b   Quản lý quyền            
+                                tr(class="" data-name="role_view") 
+                                    td Xem
+                                    each role in roles 
+                                        td(class="text-center") 
+                                            input(type="checkbox", class="size-[25px]" name="" )
+
+                                tr(class="" data-name="role_create") 
+                                    td Tạo mới 
+                                    each role in roles 
+                                        td(class="text-center") 
+                                            input(type="checkbox", class="size-[25px]" name="" )
+                                tr(class="" data-name="role_edit") 
+                                    td Chỉnh sửa 
+                                    each role in roles 
+                                        td(class="text-center") 
+                                            input(type="checkbox", class="size-[25px]" name="" )
+                                tr(class="" data-name="role_delete") 
+                                    td(class="text-[red]") Xóa 
+                                    each role in roles 
+                                        td(class="text-center") 
+                                            input(type="checkbox", class="size-[25px]" name="" )
+
+                                //- 
+
+                                tr 
+                                    td 
+                                        b   Quản lý danh mục            
+                                tr(class="" data-name="product-category_view") 
+                                    td Xem
+                                    each role in roles 
+                                        td(class="text-center") 
+                                            input(type="checkbox", class="size-[25px]" name="" )
+
+                                tr(class="" data-name="product-category_create") 
+                                    td Tạo mới 
+                                    each role in roles 
+                                        td(class="text-center") 
+                                            input(type="checkbox", class="size-[25px]" name="" )
+                                tr(class="" data-name="product-category_edit") 
+                                    td Chỉnh sửa 
+                                    each role in roles 
+                                        td(class="text-center") 
+                                            input(type="checkbox", class="size-[25px]" name="" )
+                                tr(class="" data-name="product-category_delete") 
+                                    td(class="text-[red]") Xóa 
+                                    each role in roles 
+                                        td(class="text-center") 
+                                            input(type="checkbox", class="size-[25px]" name="" )
+                                
+                                //- 
+                                tr 
+                                    td 
+                                        b   Quản lý Sản phẩm            
+                                tr(class="" data-name="product_view") 
+                                    td Xem
+                                    each role in roles 
+                                        td(class="text-center") 
+                                            input(type="checkbox", class="size-[25px]" name="" )
+
+                                tr(class="" data-name="product_create") 
+                                    td Tạo mới 
+                                    each role in roles 
+                                        td(class="text-center") 
+                                            input(type="checkbox", class="size-[25px]" name="" )
+                                tr(class="" data-name="product_edit") 
+                                    td Chỉnh sửa 
+                                    each role in roles 
+                                        td(class="text-center") 
+                                            input(type="checkbox", class="size-[25px]" name="" )
+                                tr(class="" data-name="product_delete") 
+                                    td(class="text-[red]") Xóa 
+                                    each role in roles 
+                                        td(class="text-center") 
+                                            input(type="checkbox", class="size-[25px]" name="" )
+
+
+
+            form(action=`${urlAdmin}/roles/permissions?_method=PATCH`, form-permissions class="hidden" method="POST")
+                input(type="text" class="w-full" name ="permissions" ) 
+            script(src="/admin/js/permissions.js") 
+        else 
+            div(class="text-[20px] font-[500] mt-[30px]") Bạn không có quyền truy cập 

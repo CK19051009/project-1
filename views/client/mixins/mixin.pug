@@ -1,0 +1,57 @@
+mixin boxTitleProduct(text)
+    div(class="text-[#ff424e] lg:text-[30px] md:text-[26px] sm:text-[24px] text-[22px] font-[600] mb-[16px]") #{text}
+mixin boxTitle(text)
+    span(class= "md:text-[14px] text-[12px] font-[500] text-[#38383d]") #{text}
+mixin boxSubTitle(text)
+    div(class="font-[400] my-[8px] md:text-[10px] text-[9px] text-[#808089] first:my-[0px] last:mb-0 ") !{text}
+
+mixin productItem(item, index)
+    div(class=(`bg-[white] flex flex-col rounded-[8px] product_item border-[1px] border-solid border-[#EBEBF0] product-item ${index >= 5 ? 'hidden' : ''}`) )
+        //- top
+        div(class="relative h-[200px]")
+            img(src=item.thumbnail, alt=item.title, class="rounded-[8px] w-full h-full hover:object-cover" )
+            if(item.feature)
+                span(class="bg-[#ff424e] px-[4px] py-[5px] lg:text-[12px] text-[10px] font-[500]  text-[white] absolute bottom-0 rounded-[8px]") Nổi bật 
+            
+        //- bottom
+        div(class="px-[8px]")
+            div(class="py-[10px]") 
+                a(href=`/product/detail/${item.slug}` class="font-[500] text-[16px] text-[#27272a] line-clamp-1 hover:text-[#4c4cef]") #{item.title} 
+              
+                div(class="flex items-center")
+                        i(class="fa-solid fa-star size-[10px] text-[yellow] mr-[4px]")
+                        i(class="fa-solid fa-star size-[10px] text-[yellow] mr-[4px]")
+                        i(class="fa-solid fa-star size-[10px] text-[yellow] mr-[4px]")
+                        i(class="fa-solid fa-star size-[10px] text-[yellow] mr-[4px]")
+                        i(class="fa-solid fa-star size-[10px] text-[yellow] mr-[4px]") 
+                div(class="my-[10px]")
+                    span(class="font-[500]  lg:text-[16px] text-[14px] text-[red]")  #{item.newPrice.toLocaleString()}
+                    sup(class="underline text-[red] lg:text-[12px] font-[500] text-[10px] ") đ
+
+                div(class="h-[40px]")
+                    if item.discountPersent > 0
+                        span(class="px-[5px] py-[4px] text-[#27272a] lg:text-[14px] text-[12px] font-[500]  rounded-[8px] bg-[#f5f5fa] mr-[5px]") -#{item.discountPersent}%
+                        span(class="font-[400] text-[12px] line-through text-[#808089]") #{item.price.toLocaleString()} 
+                            sup(class="underline text-[#808089] text-[12px] font-[500]") đ
+
+        div(class="py-[8px] border-t-[1px] border-t-solid border-t-[#ebebf0] text-center")
+                span(class="font-[400] text-[12px] lg:text-[14px] text-[#808089] ") Giao siêu tốc 2h
+
+mixin buttonOrder(text , path , className )
+    button(class=("active-button mb-[10px]  rounded-[8px] w-[100%] py-[10px] font-[400] text-[16px] text-center text-[#0a68ff] border-[2px] boder-solid border-[#0a68ff] last:mb-0" + className  )
+    
+        path-order = path 
+        ) #{text}
+
+mixin alertSucess(time)
+      - if (messages.sucess)
+            div(class="flex bg-[#b3f4aa] rounded-[5px] w-[auto] h-[auto]    justify-start items-center  py-[12px] pl-[20px] pr-[15px]" showAlert=time)
+
+                    i(class="fa-regular fa-circle-check text-[24px] text-[#2ecd2e] mr-[10px]")
+                    p(class="font-[600] text-[14px] text-[white]")  #{messages.sucess}
+
+mixin alertError(time)
+      - if (messages.error)
+            div(class="flex bg-[white] rounded-[5px] w-[auto] h-[auto]    justify-start items-center  py-[12px] pl-[20px] pr-[15px]" showAlert=time)
+                    i(class="fa-solid fa-triangle-exclamation mr-[10px] text-[30px] text-[#f86565]")
+                    p(class="font-[500] text-[16px] text-[black]")  #{messages.error}

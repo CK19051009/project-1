@@ -1,0 +1,35 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css")
+        link(rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css")
+        link(rel="stylesheet", href="/client/assets/css/style.css")
+        script(src="https://cdn.tailwindcss.com")
+        script(src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js")
+        title #{pageTitle}
+    body(class="bg-[#f5f5fa]")
+        div(class="text-center py-[12px]  bg-[#EFFFF4]") 
+
+                span(class="text-[12px] text-[#00ab56] font-[500]") Freeship đơn từ 45k, giảm nhiều hơn cùng 
+                strong(class="text-[12px] font-[700] text-[#4141df]") FREESHIP-XTRA
+                
+        div(class="bg-[#ffffff]")
+            div(class="container mx-auto py-[10px] flex justify-between items-center")
+              
+                div(class="flex items-center")
+                    a(href="/")
+                        img(src="/client/assets/images/logi-tiki.svg", alt="", class="md:size-[66px] size-[50px] " srcset="")
+                    div(class="ml-[20px] border-l-[1px] border-l-solid border-l-[#1aa7ff] pl-[10px]")
+                        span(class="lg:text-[24px] text-[20px] font-[500] text-[#1aa7ff]") #{title}
+                div(class="")
+                    img(src="/client/assets/images/contact.png", class="md:w-[185px] w-[140px]" alt="alt")
+
+
+        block main 
+
+
+        include ../partials/footerOrder.pug
+        script(src="/client/assets/js/script.js") 
+        script(src="/client/assets/js/cart.js") 

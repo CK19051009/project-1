@@ -1,0 +1,28 @@
+extends ../../layouts/default.pug
+include ../../mixins/mixin.pug
+block main 
+
+    div(class="relative") 
+        div(class="absolute right-0 top-[-30px]")
+                +alertSucess(3000)
+                +alertError(3000)
+
+        div(class="")
+            +titleAdmin(pageTitle)
+            div(class="mt-[50px]")
+                div
+                    b() Họ và Tên :
+                    span(class="ml-[10px]") #{user.fullname}
+                div(class="mt-[20px]")
+                    b() Email :
+                    span(class="ml-[10px]") #{user.email}
+                div(class="mt-[20px]")
+                    b() Số điện thoại :
+                    span(class="ml-[10px]") #{user.phone}
+                div(class="mt-[20px]")
+                    b() Địa chỉ :
+                    span(class="ml-[10px]") #{user.address}
+                div(class="mt-[20px]")
+                    b() Avatar :
+                    div(class="" )
+                        img(src=user.avatar  class="w-[200px] mt-[10px]", alt="")

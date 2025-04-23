@@ -1,0 +1,100 @@
+extends ../../layouts/default.pug
+include ../../mixins/mixin.pug
+block main 
+
+    div(class="relative")
+        div(class="absolute right-0 top-[-30px]")
+                +alertError(3000)
+    +titleAdmin(pageTitle) 
+    //- 
+    form(action=`${urlAdmin}/products/create`, method="POST" enctype="multipart/form-data") 
+        //- 
+        div(class="mt-[50px]")
+            div(class="mb-[10px]")
+                label(for="title" class="lg:text-[18px] md:text-[16px] text-[14px] font-[500]") Tên sản phẩm : 
+            input(type="text" name="title" required  id="title"  class="bg-[#f2f1f1] w-full rounded-[8px] outline-none h-[40px] pl-[14px]" placeholder="Nhập tên sản phẩm...") 
+        //- 
+        div(class="mt-[20px] flex xl:flex-nowrap flex-wrap gap-4")
+            //- 
+            div(class="")
+                div(class="mb-[10px]")
+                    label(for="parent_id" class="lg:text-[18px] md:text-[16px] text-[14px] font-[500]") Danh mục cha :
+                select(name="parent_id"  id ="parent_id" class=" bg-[#f2f1f1] outline-none rounded-[10px]")
+                    option(class="" value="") --------Chọn danh mục cha---------
+
+                    if (newCategorys)
+                       +select-option(newCategorys)
+
+
+            //- 
+            div(class="xl:ml-[40px]")
+                label(for="feature" class="lg:text-[18px] md:text-[16px] text-[14px] font-[500] ")   Sản phẩm nổi bật:
+                div(class="flex justify-start items-center mt-[10px] ")
+                        div(class="flex justify-start items-center")
+                            input(type="radio" name="feature" value="1" class="size-[20px]") 
+                            span(class="ml-[5px] text-[18px]") Nổi bật
+                        div(class="ml-[20px] flex justify-start items-center")
+                            input(type="radio" name="feature" value="0" class="size-[20px]")
+                            span(class="ml-[5px] text-[18px]") Không nổi bật
+
+            //- 
+            div(class="xl:ml-[40px]")
+                label(for="price" class="lg:text-[18px] md:text-[16px] text-[14px] font-[500] ")   Giá gốc (VND) : 
+                div(class="mt-[10px]")
+                    input(type="number" name="price" min = "1" class="bg-[#f2f1f1] *:w-[200px] py-[4px] px-[10px] rounded-[5px] outline-none pl-[8px]")
+
+            
+            //- 
+            div(class="xl:ml-[40px]")
+                label(for="discountPersent" class="lg:text-[18px] md:text-[16px] text-[14px] font-[500] ")   % giảm giá :
+                div(class="mt-[10px]")
+                    input(type="number" name="discountPersent" class="bg-[#f2f1f1] w-[80px] py-[4px] rounded-[5px] outline-none pl-[8px]")
+            //- 
+            div(class="xl:ml-[40px]")
+                label(for="position" class="lg:text-[18px] md:text-[16px] text-[14px] font-[500] ")   Vị trí:
+                div(class="mt-[10px]")
+                    input(type="number" name="position" class="bg-[#f2f1f1] w-[50px] rounded-[5px] py-[4px] outline-none pl-[8px]")
+
+                
+             
+        //- 
+        div(class="mt-[20px]")
+            div(class="mb-[10px]")
+                label(for="description" class="lg:text-[18px] md:text-[16px] text-[14px] font-[500]") Mô tả :
+            textarea(name="description" class="tinyMCE") 
+        //- 
+        div(class="mt-[20px]")
+            div(class="mb-[10px]")
+                label(for="thumbnail" class="lg:text-[18px] md:text-[16px] text-[14px] font-[500]") Ảnh: 
+                label(for="thumbnail")
+                    i(class="fa-regular fa-image lg:text-[20px] text-[16px] hover:text-[#65d365]")
+            input(type="file" accept="image/*" class="hidden" id ="thumbnail" name="thumbnail"  class="input_upload" )
+            div(class="mt-[10px] relative")
+                button(class="size-[25px] left-[180px] hidden absolute    rounded-[10px] hover:bg-[#c92424] mb-[10px]" close-image type="button") 
+                    i(class="fa-solid fa-xmark px-[5px] py-[3px] text-center hover:text-[white] ")
+                img(src="", alt="", class="image_upload  lg:w-[200px] md:w-[160px] w-[100px]  object-cover rounded-[8px] ") 
+       
+        //- 
+
+        div(class="mt-[20px]")
+            div(class="mb-[10px]")
+                label(for="productImages" class="lg:text-[18px] md:text-[16px] text-[14px] font-[500]") Ảnh phụ: 
+                label(for="productImages")
+                    i(class="fa-regular fa-images text-[20px] hover:text-[#65d365]")
+            input(type="file" accept="image/*" class="hidden" id ="productImages" name="productImages" multiple input-upload-images )
+       
+                
+        div(class="flex" productImages )
+
+            
+
+        div(class="mt-[30px] flex justify-start items-center ")
+                    div(class="flex justify-start items-center")
+                        input(type="radio" name="status" value="active" class="size-[20px]") 
+                        span(class="ml-[5px] lg:text-[18px] md:text-[16px] text-[14px]") Hoạt động
+                    div(class="ml-[20px] flex justify-start items-center")
+                        input(type="radio" name="status" value="inactive" class="size-[20px]")
+                        span(class="ml-[5px] lg:text-[18px] md:text-[16px] text-[14px]") Dừng hoạt động
+        div(class="mt-[30px]")
+            button(class="bg-[#0a68ff] px-[10px] py-[5px] rounded-[10px] text-[14px] lg:text-[16px] text-[white] font-[500]" type="submit") Tạo mới 
+            a(href=`${urlAdmin}/product-category` class="ml-[15px] bg-[#c92424] text-[white] text-[14px] lg:text-[16px] font-[500] py-[5px] px-[10px] rounded-[10px] ") Quay lại

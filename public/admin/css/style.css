@@ -1,0 +1,29 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+.table_role > .thead_role > tr {
+  background-color: #0a68ff;
+  color: #f0f5f7;
+}
+.table_role > .thead_role > tr > th {
+  padding: 10px 0;
+  align-items: center;
+}
+
+.tbody_role > tr > td {
+  padding: 8px 0;
+
+  font-size: 16px;
+  font-weight: 500;
+}
+.tbody_role > tr {
+  border-bottom: 2px dotted #0a68ff;
+}
+
+.active {
+  color: white !important;
+  background-color: #0a68ff;
+  border: 0px !important;
+}

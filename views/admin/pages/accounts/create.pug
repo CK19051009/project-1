@@ -1,0 +1,47 @@
+extends ../../layouts/default.pug
+include ../../mixins/mixin.pug
+block main
+    div(class="relative")
+        div(class="absolute right-0 top-[-30px]")
+                +alertError(3000)
+    +titleAdmin(pageTitle) 
+    form(action=`${urlAdmin}/account/create`, method="POST" enctype="multipart/form-data") 
+        div(class="mt-[50px]")
+            div(class="mb-[10px]")
+                label(for="fullname" class="lg:text-[18px] md:text-[16px] text-[14px] font-[500]") Họ và tên :
+            input(type="text" name="fullname" required  id="fullname"  class="bg-[#f2f1f1]  w-full rounded-[8px] outline-none h-[40px] pl-[14px]" placeholder="Nhập họ tên") 
+        div(class="mt-[20px]")
+            div(class="mb-[10px]")
+                label(for="email" class="lg:text-[18px] md:text-[16px] text-[14px] font-[500]") Email :
+            input(type="email" name="email" required  id="email"  class="w-full bg-[#f2f1f1]  rounded-[8px] outline-none h-[40px] pl-[14px]" placeholder="Nhập email:")
+        div(class="mt-[20px]")
+            div(class="mb-[10px]")
+                label(for="password" class="lg:text-[18px] md:text-[16px] text-[14px] font-[500]") Mật khẩu:
+            input(type="password" name="password" required id="password"   class="w-full bg-[#f2f1f1]  rounded-[8px] outline-none h-[40px] pl-[14px]" placeholder="Nhập mật khẩu:")
+        div(class="mt-[20px]")
+            div(class="mb-[10px]")
+                label(for="avatar" class="lg:text-[18px] md:text-[16px] text-[14px] font-[500]") Avatar: 
+            input(type="file" accept="image/*" id ="avatar" name="avatar" class="input_upload" )
+            div(class="mt-[10px] relative")
+                button(class="size-[25px] left-[180px] hidden absolute    rounded-[10px] hover:bg-[#c92424] mb-[10px]" close-image type="button") 
+                    i(class="fa-solid fa-xmark px-[5px] py-[3px] text-center hover:text-[white] ")
+                img(src="", alt="", class="image_upload  w-[200px] object-cover rounded-[8px] ") 
+
+        div(class="mt-[20px]")
+            div(class="mb-[10px]")
+                label(for="role_id" class="lg:text-[18px] md:text-[16px] text-[14px] font-[500]") Phân quyền:
+            select(name="role_id"  id ="role_id" class="outline-none bg-[#f2f1f1]  rounded-[10px]")
+                option(class="" value="") --------Chọn quyền---------
+                if(roles)
+                    each role in roles  
+                        option(value=role.id) #{role.title}   
+        div(class="mt-[30px] flex justify-start items-center ")
+                    div(class="flex justify-start items-center")
+                        input(type="radio" name="status" value="active" class="size-[20px]") 
+                        span(class="ml-[5px] lg:text-[18px] md:text-[16px] text-[14px]") Hoạt động
+                    div(class="ml-[20px] flex justify-start items-center")
+                        input(type="radio" name="status" value="inactive" class="size-[20px]")
+                        span(class="ml-[5px] lg:text-[18px] md:text-[16px] text-[14px]") Dừng hoạt động
+        div(class="mt-[30px]")
+            button(class="bg-[#0a68ff] px-[10px] py-[5px] rounded-[10px] text-[16px] text-[white] font-[500]" type="submit") Tạo mới 
+            a(href=`${urlAdmin}/account` class="ml-[15px] bg-[#c92424] text-[white] text-[16px] font-[500] py-[5px] px-[10px] rounded-[10px] ") Quay lại

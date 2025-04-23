@@ -1,0 +1,17 @@
+extends ../../layouts/auth.pug
+
+block main 
+    div(class="flex justify-center ")
+        div(class=" mt-[150px]")
+            div(class="text-[40px] font-[800] text-center mb-[30px]") ĐĂNG NHẬP TÀI KHOẢN
+            form(action=`${urlAdmin}/auth/login`, method="POST")
+                div(class="")
+                    div
+                        label(for="email" class="text-[18px] font-[500]") Email:
+                    input(type="email" id="email" required name= "email" class="w-[500px] h-[50px]  border-[2px] border-[#131111] pl-[10px] outline-none rounded-[10px] mt-[10px]" )
+                div(class="mt-[20px]")
+                    div
+                        label(for="password" class="text-[18px] font-[500]") Password:
+                    input(type="password" id="password" required name="password" class="w-[500px] h-[50px] border-[2px] pl-[10px] border-[#131111] outline-none rounded-[10px] mt-[10px] ")
+                div(class="mt-[20px]")
+                    button(class="w-[500px] h-[50px]  border-[2px] text-[18px] font-[500] text-[white] outline-none rounded-[10px] bg-[#2626e8]") Đăng nhập

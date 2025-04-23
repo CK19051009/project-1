@@ -1,0 +1,25 @@
+extends ../../layouts/default.pug
+
+block main 
+    .chat(my-id-chat = client.id)
+        .inner-body
+            each chat in chats
+                div(class=((chat.userId === client.id ? "inner-outgoing" : "inner-incoming" )))
+                    if (chat.userId !== client.id)
+                        .inner-name #{chat.fullname}
+                    .inner-content #{chat.content}
+    
+        .inner-foot
+            .inner-preview-images
+                .custom-file-container(data-upload-id="upload-images")
+            form.inner-form(action="")
+                input(type="text" name="content" placeholder="Nhập nội dung...")
+                span.button-icon
+                    i.fa-regular.fa-face-smile
+                label.button-image(for="file-upload-with-preview-upload-images")
+                    i.fa-regular.fa-image
+                button
+                    i.fa-solid.fa-paper-plane
+    div(class="tooltip")
+        emoji-picker
+    script(src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js", type="module")

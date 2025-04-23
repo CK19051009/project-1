@@ -1,0 +1,106 @@
+mixin alertSucess(time)
+      - if (messages.sucess)
+            div(class="flex bg-[white] rounded-[5px] w-[auto] h-[auto]    justify-start items-center  py-[12px] pl-[20px] pr-[15px]" showAlert=time)
+
+                    i(class="fa-regular fa-circle-check text-[30px] text-[#8efd8e] mr-[10px]")
+                    p(class="font-[500] text-[16px] text-[black]")  #{messages.sucess}
+
+mixin alertError(time)
+      - if (messages.error)
+            div(class="flex bg-[white] rounded-[5px] w-[auto] h-[auto]    justify-start items-center  py-[12px] pl-[20px] pr-[15px]" showAlert=time)
+                    i(class="fa-solid fa-triangle-exclamation mr-[10px] text-[30px] text-[#f86565]")
+                    p(class="font-[500] text-[16px] text-[black]")  #{messages.error}
+
+mixin select-option(items , level = 1 , parent_id = "")
+      each item in items 
+            - const perfix = Array(level + 1 ).join("-- ");
+            option(value=item.id selected = (item.id == parent_id ? true : false)) #{perfix}#{item.title}
+            if item.children && item.children.length > 0
+                  +select-option(item.children , level + 1 , parent_id )
+
+mixin titleAdmin(title) 
+      div(class="lg:text-[25px] text-[22px] text-[#0a68ff] font-[700]") #{title}
+mixin tableTree(items , level = 1 )
+      each item  in items 
+            - const perfix = Array(level + 1).join("-- ")
+            tr(class="text-center") 
+                  if (role.permissions.includes("product-category_edit"))
+                        td 
+                              input(type="checkbox" class="size-[20px]" value = item.id inputcheckbox)
+                  td #{item.count}
+                  //- td(class="flex  justify-center") 
+                  //-       img(src=item.thumbnail, class="h-[100px] object-cover " alt="")
+                  td(class="text-left ") 
+                        p  #{perfix}#{item.title}
+                  td(class="hidden lg:table-cell") 
+                        if (role.permissions.includes("product-category_edit"))
+                              input(type="number" min="1" input-position class="w-[50px] outline-none rounded-[5px] pl-[6px]" value = item.position)
+                        else 
+                              span(class="") #{item.position}
+                  td(class="hidden lg:table-cell")  
+                        if (item.createdBy.account_id)
+                              span() #{item.createdBy.fullName}
+                              br
+                              span() #{moment(item.createdBy.createdAt).format('MMMM Do YYYY, HH:mm:ss a')}
+                  td(class="hidden lg:table-cell")     
+                        if (item.editBY.length > 0)
+                              span() #{item.editBY[item.editBY.length - 1].fullName}
+                              br
+                              span() #{moment(item.editBY[item.editBY.length - 1].editAt).format('MMMM Do YYYY, HH:mm:ss a')}
+                  td 
+                        if (role.permissions.includes("product-category_edit"))
+                              if(item.status == "active")
+                                    button(class="bg-[#98f398] text-[16px] text-center px-[5px] py-[3px] font-[500] rounded-[8px] text-[white]" button-status = item.status button-id = item.id) Hoạt động
+                        
+
+                              if(item.status == "inactive")
+                                    button(class="bg-[#fd6666] text-[16px] text-center px-[5px] py-[3px] font-[500] rounded-[8px] text-[white]" button-status = item.status button-id = item.id) Dừng hoạt động
+                        else 
+                              if(item.status == "active")
+                                    span(class="bg-[#98f398] text-[16px] text-center px-[5px] py-[3px] font-[500] rounded-[8px] text-[white]" ) Hoạt động
+                        
+
+                              if(item.status == "inactive")
+                                    span(class="bg-[#fd6666] text-[16px] text-center px-[5px] py-[3px] font-[500] rounded-[8px] text-[white]" ) Dừng hoạt động
+                              
+                  td 
+                        if (role.permissions.includes("product-category_edit"))
+                              a(href=`${urlAdmin}/product-category/edit/${item.id}` class="bg-[#3ec43e] rounded-[8px] text-[18px] text-[white] font-[500] px-[6px] py-[5px] mr-[10px] ") 
+                                    i(class="fa-regular fa-pen-to-square size-[20px]")
+                        if (role.permissions.includes("product-category_delete"))
+                              button(button-delete-role class="bg-[#e34d4d] rounded-[8px] text-[18px] font-[500]  text-[white] px-[6px] py-[5px]"  title=`danh mục ${item.title}`  ) 
+                                    i(class="fa-regular fa-trash-can  ")
+
+                                    form(action=`${urlAdmin}/product-category/delete/${item.id}`, class="hidden" form-delete-role method="GET")
+            if (item.children && item.children.length > 0 ) 
+                  +tableTree(item.children ,   level + 1  )
+
+
+      form(action="", method="GET"
+            path-status = `${urlAdmin}/product-category/change-status`
+      ) 
+
+
+//- 
+mixin buttonStatus(buttons)
+      div(class="" list-button-status)
+            each button in buttons
+                  button(
+                        status=button.status 
+                        class=`xl:px-[12px] px-[8px] mr-[10px] py-[6px] xl:py-[10px] text-[14px] xl:text-[16px] font-[500] text-[#0a68ff] rounded-[10px] xl:border-[2px] border-[1px] border-solid border-[#0a68ff] ${button.class}`) #{button.title}
+
+//- 
+mixin pagination(pagination)
+      nav(class="text-center")
+            ul(class="inline-flex items-center  border-solid border-[2px] border-[#white] bg-[white] rounded-[8px] ")
+                  if (pagination.currentPage > 1 )
+                        li(class=` border-r-[1px] border-r-solid border-r-[#cdc6c6] last:border-r-[0px]  text-[18px] font-[500] `)
+                              button(class="px-[14px] py-[8px]" page-href = pagination.currentPage - 1  )
+                                    i(class="fa-solid fa-chevron-left")
+                  -for (let i = 1 ; i <= pagination.allPages ; i++) 
+                        li(class=` border-r-[1px] border-r-solid border-r-[#cdc6c6] last:border-r-[0px]  text-[18px] font-[500] ${pagination.currentPage === i ? "active" : ""}`)
+                              button(class="px-[14px] py-[8px]" page-href = i ) #{i}
+                  if (pagination.currentPage < pagination.allPages )
+                        li(class=` border-r-[1px] border-r-solid border-r-[#cdc6c6] last:border-r-[0px]  text-[18px] font-[500] `)
+                              button(class="px-[14px] py-[8px]" page-href = pagination.currentPage +  1)
+                                    i(class="fa-solid fa-chevron-right")
